@@ -13,6 +13,14 @@
     <link href="css/bootstrap.min.css" rel="stylesheet">
     <link href="css/styles.css" rel="stylesheet">
     <link rel="stylesheet" href="https://fonts.googleapis.com/icon?family=Material+Icons">
+
+    <style>
+        .floating-menu {
+            z-index: 100;
+            position: fixed;
+            padding-left: 37%;
+        }
+    </style>
 </head>
 
 <body>
@@ -21,32 +29,28 @@
     </div>
     <!-- End #mobile-menu-toggle -->
     <header>
-        <div id="mobile-menu-close">
-            <span>Close</span> <i class="fa fa-times" aria-hidden="true"></i>
-        </div>
-        <ul id="menu" class="shadow">
-            <li>
-                <a href="#about">About</a>
-            </li>
-            <li>
-                <a href="#experience">Experience</a>
-            </li>
-            <li>
-                <a href="#education">Education</a>
-            </li>
-            <li>
-                <a href="#projects">Publications</a>
-            </li>
-            <li>
-                <a href="#submissions">Under Review</a>
-            </li>
-            <li>
-                <a href="#skills">Skills</a>
-            </li>
-            <li>
-                <a href="#contact">Contact</a>
-            </li>
-        </ul>
+        <nav class="floating-menu">
+            <div id="mobile-menu-close">
+                <span>Close</span> <i class="fa fa-times" aria-hidden="true"></i>
+            </div>
+            <ul id="menu" class="shadow">
+                <li>
+                    <a href="#about">About</a>
+                </li>
+                <li>
+                    <a href="#experience">Experience</a>
+                </li>
+                <li>
+                    <a href="#education">Education</a>
+                </li>
+                <li>
+                    <a href="#projects">Publications</a>
+                </li>
+                <li>
+                    <a href="#skills">Skills</a>
+                </li>
+            </ul>
+        </nav>    
     </header>
     <!-- End header -->
 
@@ -59,7 +63,11 @@
                 <br>
             </div>
             <br>
-            <a href="https://drive.google.com/file/d/1-mnoyV4NvBw6qJG9e70wozYXZrZTGsiD/view?usp=sharing" class="btn-rounded-white">Download Resume</a>
+            <a href="mailto:acalphabeta13@gmail.com" class="btn-rounded-white">Email</a>
+            <a href="https://scholar.google.com/citations?user=C69lK0gAAAAJ&hl=en" class="btn-rounded-white">gScholar</a>
+            <a href="https://github.com/ac5113" class="btn-rounded-white">GitHub</a>
+            <a href="http://www.linkedin.com/in/JohnDoe13" class="btn-rounded-white">LinkedIn</a>
+            <a href="https://drive.google.com/file/d/1-mnoyV4NvBw6qJG9e70wozYXZrZTGsiD/view?usp=sharing" class="btn-rounded-white">Resume</a>
         </div>
         <!-- End #lead-content -->
 
@@ -328,18 +336,6 @@
         </ul>
     </div>
     <!-- End #skills -->
-
-    <div id="contact">
-        <h2>Get in Touch</h2>
-        <div id="contact-form">
-            <form method="POST" action="https://formspree.io/f/mzbwqzoz">
-                <input type="hidden" name="_subject" value="Contact request from personal website" />
-                <input type="email" name="_replyto" placeholder="Your email" required>
-                <textarea name="message" placeholder="Your message" required></textarea>
-                <button type="submit">Send</button>
-            </form>
-        </div>
-    </div>
 
     <footer>
         <div class="container">
