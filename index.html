@@ -5,20 +5,66 @@
     <meta charset="utf-8">
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
     <meta name="viewport" content="width=device-width, initial-scale=1">
-    <title>My Portfolio</title>
-	<link rel="shortcut icon" href="favicon.ico" type="image/x-icon">
-	<link rel="icon" href="favicon.ico" type="image/x-icon">
+    
+    <meta name="description" content="Agniv Chatterjee is a Ph.D. student at UT Austin specializing in Computer Vision, Human-Object Interaction, and 3D Reconstruction.">
+    <meta name="keywords" content="Agniv Chatterjee, UT Austin, Computer Vision, PhD, Machine Learning, Research, 3D Reconstruction">
+    <meta name="author" content="Agniv Chatterjee">
+
+    <title>Agniv Chatterjee | Portfolio</title>
+    
+    <link rel="shortcut icon" href="favicon.ico" type="image/x-icon">
+    <link rel="icon" href="favicon.ico" type="image/x-icon">
+    
     <link href="https://fonts.googleapis.com/css?family=Lato:300,400,700,900" rel="stylesheet">
     <link rel="stylesheet" href="libs/font-awesome/css/font-awesome.min.css">
+    <link rel="stylesheet" href="https://fonts.googleapis.com/icon?family=Material+Icons">
+    
     <link href="css/bootstrap.min.css" rel="stylesheet">
     <link href="css/styles.css" rel="stylesheet">
-    <link rel="stylesheet" href="https://fonts.googleapis.com/icon?family=Material+Icons">
 
     <style>
         .floating-menu {
             z-index: 100;
             position: fixed;
-            padding-left: 37%;
+            width: 100%;
+            text-align: center;
+        }
+        
+        /* Modern Badge Styles for Skills */
+        .skill-badge {
+            font-size: 1.1em;
+            margin: 5px;
+            padding: 8px 15px;
+            border-radius: 20px;
+            display: inline-block;
+            font-weight: 400;
+            box-shadow: 0 2px 5px rgba(0,0,0,0.1);
+        }
+        .bg-tech { background-color: #3498db; color: white; } /* Blue for core tech */
+        .bg-tool { background-color: #95a5a6; color: white; } /* Grey for tools */
+        
+        /* Button overrides for Publications */
+        .btn-outline-custom {
+            border: 1px solid #333;
+            color: #333;
+            padding: 5px 15px;
+            border-radius: 20px;
+            text-decoration: none;
+            margin-right: 10px;
+            transition: all 0.3s;
+        }
+        .btn-outline-custom:hover {
+            background-color: #333;
+            color: #fff;
+            text-decoration: none;
+        }
+        
+        /* Profile Image Styling */
+        .profile-img {
+            border-radius: 50%;
+            border: 4px solid #fff;
+            box-shadow: 0 4px 10px rgba(0,0,0,0.3);
+            margin-bottom: 20px;
         }
     </style>
 </head>
@@ -27,49 +73,38 @@
     <div id="mobile-menu-open" class="shadow-large">
         <i class="fa fa-bars" aria-hidden="true"></i>
     </div>
-    <!-- End #mobile-menu-toggle -->
+    
     <header>
         <nav class="floating-menu">
             <div id="mobile-menu-close">
                 <span>Close</span> <i class="fa fa-times" aria-hidden="true"></i>
             </div>
             <ul id="menu" class="shadow">
-                <li>
-                    <a href="#about">About</a>
-                </li>
-                <li>
-                    <a href="#experience">Experience</a>
-                </li>
-                <li>
-                    <a href="#education">Education</a>
-                </li>
-                <li>
-                    <a href="#projects">Publications</a>
-                </li>
-                <li>
-                    <a href="#skills">Skills</a>
-                </li>
+                <li><a href="#about">About</a></li>
+                <li><a href="#experience">Experience</a></li>
+                <li><a href="#education">Education</a></li>
+                <li><a href="#projects">Publications</a></li>
+                <li><a href="#skills">Skills</a></li>
             </ul>
         </nav>    
     </header>
-    <!-- End header -->
 
     <div id="lead" style="background-color: #2a2a2b">
         <div id="lead-content">
-            <div class="project-image">
-                <img src="images/Face.jpg" width="200"/>
-                <h2></h2>
+            <div class="text-center">
+                <img src="images/Face.jpg" class="profile-img" width="180" alt="Agniv Chatterjee"/>
                 <h1>Agniv Chatterjee</h1>
-                <br>
+                <h3 style="color: #e0e0e0; font-weight: 300; margin-top: 10px;">Ph.D. Student @ UT Austin | Computer Vision Researcher</h3>
             </div>
             <br>
-            <a href="mailto:agniv.chatterjee@utexas.edu" class="btn-rounded-white">Email</a>
-            <a href="https://scholar.google.com/citations?user=C69lK0gAAAAJ&hl=en" class="btn-rounded-white">gScholar</a>
-            <a href="https://github.com/ac5113" class="btn-rounded-white">GitHub</a>
-            <a href="http://www.linkedin.com/in/JohnDoe13" class="btn-rounded-white">LinkedIn</a>
-            <a href="https://drive.google.com/file/d/1-mnoyV4NvBw6qJG9e70wozYXZrZTGsiD/view?usp=sharing" class="btn-rounded-white">Resume</a>
+            <div style="margin-top: 20px;">
+                <a href="mailto:agniv.chatterjee@utexas.edu" class="btn-rounded-white"><i class="fa fa-envelope"></i> Email</a>
+                <a href="https://scholar.google.com/citations?user=C69lK0gAAAAJ&hl=en" target="_blank" class="btn-rounded-white"><i class="fa fa-graduation-cap"></i> Scholar</a>
+                <a href="https://github.com/ac5113" target="_blank" class="btn-rounded-white"><i class="fa fa-github"></i> GitHub</a>
+                <a href="https://www.linkedin.com/in/YOUR_LINKEDIN_ID_HERE" target="_blank" class="btn-rounded-white"><i class="fa fa-linkedin"></i> LinkedIn</a>
+                <a href="https://drive.google.com/file/d/1-mnoyV4NvBw6qJG9e70wozYXZrZTGsiD/view?usp=sharing" target="_blank" class="btn-rounded-white"><i class="fa fa-file-text"></i> Resume</a>
+            </div>
         </div>
-        <!-- End #lead-content -->
 
         <div id="lead-overlay"></div>
 
@@ -78,24 +113,8 @@
                 <i class="fa fa-chevron-down" aria-hidden="true"></i>
             </span>
         </div>
-        <!-- End #lead-down -->
     </div>
-    <!-- End #lead -->
 
-    <div id="philosophy">
-        <div class="container">
-            <div class="row">
-                <div class="col-md-4">
-                    <!-- <h2 class="heading">Philosophy</h2> -->
-                </div>
-                <div class="col-md-8">
-                    <br>
-                    <img src="images/machine_learning.png" alt="Wannabe ML pic">
-                </div>
-            </div>
-        </div>
-    </div>
-    
     <div id="about">
         <div class="container">
             <div class="row">
@@ -104,67 +123,59 @@
                 </div>
                 <div class="col-md-8">
                     <p>
-                        I am a 2nd year doctoral student at the University of Texas at Austin, under the supervision of <a href=https://geopavlakos.github.io/>Dr. Georgios Pavlakos</a>. 
-                        My area of research currently is understanding how humans interact with their surroundings, especially with objects, and how this interaction can be quantified using 3D representations.
-		    </p>
-			<p>
-                        I have worked on various projects in the fields of Human-Object Interaction, Pose Classification and Contact Estimation, Tiny Object Detection and Classification, Audio Classification, and Biomedical Image Segmentation, under the purview of Computer Vision. 
+                        I am a 2nd year doctoral student at the University of Texas at Austin, under the supervision of <a href="https://geopavlakos.github.io/" target="_blank">Dr. Georgios Pavlakos</a>. 
+                        My research currently focuses on understanding how humans interact with their surroundings, especially with objects, and how this interaction can be quantified using 3D representations.
+                    </p>
+                    <p>
+                        I have worked on various projects in the fields of Human-Object Interaction, Pose Classification and Contact Estimation, Tiny Object Detection and Classification, Audio Classification, and Biomedical Image Segmentation. 
                         I am open to working on new projects on topics both known and unexplored by me.
                     </p>
                 </div>
             </div>
         </div>
     </div>
-    <!-- End #about -->
 
     <div id="experience" class="background-alt">
         <h2 class="heading">Experience</h2>
         <div id="experience-timeline">
-			<div data-date="August, 2024 - Present">
+            <div data-date="August, 2024 - Present">
                 <h3>University of Texas at Austin</h3>
-                <p></p>
                 <h3>Dept of Computer Science</h3>
                 <h4>Graduate Research Assistant</h4>
                 <p>
-                    Worked on the joint reconstruction of full-body humans and objects from natural images under Dr. Georgios Pavlakos
+                    Working on the joint reconstruction of full-body humans and objects from natural images under Dr. Georgios Pavlakos.
                 </p>
             </div>
 
             <div data-date="December, 2021 - June, 2025">
                 <h3>Max Planck Institute for Intelligent Systems, Tübingen</h3>
-                <p></p>
                 <h3>Perceiving Systems</h3>
                 <h4>Undergraduate Research Intern</h4>
                 <p>
-                    I developed a discrete contact annotation tool for vertex-level contact annotation under Dr. Michael Black.
-                    I also created a vertex-level human contact dataset and developed a framework for detecting contact from natural images of humans.
-                    The work has been accepted at ICCV 2023.
+                    Developed a discrete contact annotation tool for vertex-level contact annotation under Dr. Michael Black.
+                    Created a vertex-level human contact dataset and developed a framework for detecting contact from natural images of humans (ICCV 2023).
                 </p>
                 <br>
                 <p>
-                    Subsequently, I was also a part of a project to jointly reconstruct human and object meshes from natural images, given their contact regions.
-                    This work has been accepted at CVPR 2025.
+                    Subsequently, worked on joint reconstruction of human and object meshes from natural images given their contact regions (CVPR 2025).
                 </p>
             </div>
 
             <div data-date="May, 2022 - August, 2022">
                 <h3>INRIA, Sophia Antipolis</h3>
-                <p></p>
                 <h3>STARS Team</h3>
                 <h4>Undergraduate Research Intern</h4>
                 <p>
-                    I developed a combined detection-classification pipeline for High-Resolution images of Trichogramma wasps.
-                    The work has been published at VISAPP 2023.
+                    Developed a combined detection-classification pipeline for High-Resolution images of Trichogramma wasps (VISAPP 2023).
                 </p>
             </div>
 
             <div data-date="January, 2021 - May, 2023">
                 <h3>Indian Institute of Science</h3>
-                <p></p>
                 <h3>Spire Lab</h3>
                 <h4>Undergraduate Research Intern</h4>
                 <p>
-                    I developed a framework for the diagnosis of patients as ALS/PD or Normal, based on phoneme utterance audios, under Dr. Prasanta Ghosh.
+                    Developed a framework for the diagnosis of patients as ALS/PD or Normal, based on phoneme utterance audios, under Dr. Prasanta Ghosh.
                 </p>
             </div>
 
@@ -172,7 +183,7 @@
                 <h3>Indian Institute of Technology, Delhi</h3>
                 <h4>Undergraduate Research Intern</h4>
                 <p>
-                    I developed a framework for Automatic Pose Identification and Recommendation for Yoga asanas under Dr. Brejesh Lall.
+                    Developed a framework for Automatic Pose Identification and Recommendation for Yoga asanas under Dr. Brejesh Lall.
                 </p>
             </div>
 
@@ -180,198 +191,186 @@
                 <h3>Department of Electrical Engineering</h3>
                 <h4>Undergraduate Research Assistant</h4>
                 <p>
-                    I performed independent research under Dr. Debangshu Dey on Glaucoma detection using deep learning methods. 
-                    The submitted manuscript has been published in Biomedical Signal Processing and Control, Elsevier.
+                    Performed independent research under Dr. Debangshu Dey on Glaucoma detection using deep learning methods (Published in Biomedical Signal Processing and Control, Elsevier).
                 </p>
             </div>
         </div>
     </div>
-    <!-- End #experience - reverse -->
 
     <div id="education">
         <h2 class="heading">Education</h2>
         <div class="education-block">
+            <h3>University of Texas at Austin</h3>
+            <span class="education-date">August 2024 - Present</span>
+            <h4>Ph.D. in Computer Science</h4>
+            <p>GPA: 4.0/4.0</p>
+        </div>
+        
+        <div class="education-block">
             <h3>Jadavpur University</h3>
             <span class="education-date">Sept 2019 - June 2023</span>
             <h4>Bachelor of Electrical Engineering</h4>
-            <p>
-                CGPA: 8.7/10.0
-            </p>
+            <p>CGPA: 8.7/10.0</p>
         </div>
-        <!-- End .education-block -->
-
-        <div class="education-block">
-            <h3>University of Texas at Austin</h3>
-            <span class="education-date">August 2024 - present</span>
-            <h4>Ph.D. in Computer Science</h4>
-            <p>
-                GPA: 4.0/4.0 
-            </p>
-        </div>
-        <!-- End .education-block -->
     </div>
-    <!-- End #education -->
 
     <div id="projects" class="background-alt">
         <h2 class="heading">Publications</h2>
         <div class="container">
-            <div class="row">
-                <div class="project shadow-large">
-                    <br>
-                    <div class="project-image">
-                        <img src="images/deco_teaser.png" width="300" vspace="50"/>
-                    </div>
-                    <!-- End .project-image -->
-                    <div class="project-info">
-                        <h3><b>DECO: Dense Estimation of 3D Human-Scene Contact In The Wild</b></h3>
+            
+            <div class="row shadow-large" style="background: #fff; padding: 20px; margin-bottom: 30px; border-radius: 5px; overflow: hidden;">
+                <div class="col-md-4 d-flex align-items-center justify-content-center">
+                    <img src="images/deco_teaser.png" alt="DECO Teaser" style="width: 100%; height: auto; border-radius: 4px;">
+                </div>
+                <div class="col-md-8">
+                    <div style="padding: 10px 0 0 15px;">
+                        <h3 style="margin-top: 0; color: #374054;"><b>DECO: Dense Estimation of 3D Human-Scene Contact In The Wild</b></h3>
                         <p>
                             Proposed a pipeline to infer dense 3D contact on the human body using scene and body-part context. 
                             Also curated a dataset with in-the-wild images and crowdsourced dense 3D contact annotations.
-                        <!-- </p>
-                        <p> -->
-                            <br>It has been accepted at the <b>International Conference on Computer Vision (ICCV), 2023 (Oral)</b>.
                         </p>
-                        <a href="https://deco.is.tue.mpg.de">| Link |</a>
-                        <a href="https://github.com/sha2nkt/deco">Code |</a>
+                        <p style="color: #777; font-style: italic; font-size: 0.95em;">
+                            Accepted at <b>International Conference on Computer Vision (ICCV), 2023 (Oral)</b>.
+                        </p>
+                        <div style="margin-top: 15px;">
+                            <a href="https://deco.is.tue.mpg.de" class="btn-outline-custom" target="_blank">Project Page</a>
+                            <a href="https://github.com/sha2nkt/deco" class="btn-outline-custom" target="_blank"><i class="fa fa-github"></i> Code</a>
+                        </div>
                     </div>
-                    <!-- End .project-info -->
-                    <br>
                 </div>
-                <!-- End .project -->
             </div>
-        </div>
-        <div class="container">
-            <div class="row">
-                <div class="project shadow-large">
-                    <div class="project-image">
-                        <img src="images/visapp_visual.png" width="300" vspace="50"/>
-                    </div>
-                    <!-- End .project-image -->
-                    <div class="project-info">
-                        <h3><b>TrichANet: An Attentive Network for Trichogramma Classification</b></h3>
+
+            <div class="row shadow-large" style="background: #fff; padding: 20px; margin-bottom: 30px; border-radius: 5px; overflow: hidden;">
+                <div class="col-md-4 d-flex align-items-center justify-content-center">
+                    <img src="images/visapp_visual.png" alt="TrichANet Visual" style="width: 100%; height: auto; border-radius: 4px;">
+                </div>
+                <div class="col-md-8">
+                    <div style="padding: 10px 0 0 15px;">
+                        <h3 style="margin-top: 0; color: #374054;"><b>TrichANet: An Attentive Network for Trichogramma Classification</b></h3>
                         <p>
                             Proposed a combined detection-classification pipeline for the detection of tiny wasps from images, and subsequent classification into species.
-                        <!-- </p>
-                        <p> -->
-                            <br>It has been accepted for oral presentation at the <b>International Conference on Computer Vision Theory and Applications (VISAPP), 2023</b>.
                         </p>
-                        <a href="https://www.scitepress.org/PublicationsDetail.aspx?ID=5IVILEia0fs=&t=1">| Link |</a>
-                        <a href="https://github.com/ac5113/TrichANet"> Code |</a>
+                        <p style="color: #777; font-style: italic; font-size: 0.95em;">
+                            Accepted for oral presentation at <b>VISAPP 2023</b>.
+                        </p>
+                        <div style="margin-top: 15px;">
+                            <a href="https://www.scitepress.org/PublicationsDetail.aspx?ID=5IVILEia0fs=&t=1" class="btn-outline-custom" target="_blank">Paper</a>
+                            <a href="https://github.com/ac5113/TrichANet" class="btn-outline-custom" target="_blank"><i class="fa fa-github"></i> Code</a>
+                        </div>
                     </div>
-                    <!-- End .project-info -->
                 </div>
-                <!-- End .project -->
             </div>
-        </div>
-        <div class="container">
-            <div class="row">
-                <div class="project shadow-large">
-                    <div class="project-image">
-                        <img src="images/pico_teaser.png" width="300" vspace="50"/>
-                    </div>
-                    <!-- End .project-image -->
-                    <div class="project-info">
-                        <h3><b>PICO: Reconstructing 3D People In Contact with Objects</b></h3>
+
+            <div class="row shadow-large" style="background: #fff; padding: 20px; margin-bottom: 30px; border-radius: 5px; overflow: hidden;">
+                <div class="col-md-4 d-flex align-items-center justify-content-center">
+                    <img src="images/pico_teaser.png" alt="PICO Teaser" style="width: 100%; height: auto; border-radius: 4px;">
+                </div>
+                <div class="col-md-8">
+                    <div style="padding: 10px 0 0 15px;">
+                        <h3 style="margin-top: 0; color: #374054;"><b>PICO: Reconstructing 3D People In Contact with Objects</b></h3>
                         <p>
                             Proposed a framework for joint human-object reconstruction in 3D, using an optimization-based method guided by contact constraints.
-                        <!-- </p>
-                        <p> -->
-                            <br>It has been accepted at the <b>Conference on Computer Vision and Pattern Recognition (CVPR), 2025</b>.
                         </p>
-                        <a href="https://pico.is.tue.mpg.de/">| Link |</a>
-                        <a href="https://github.com/alparius/pico"> Code |</a>
+                        <p style="color: #777; font-style: italic; font-size: 0.95em;">
+                            Accepted at <b>CVPR 2025</b>.
+                        </p>
+                        <div style="margin-top: 15px;">
+                            <a href="https://pico.is.tue.mpg.de/" class="btn-outline-custom" target="_blank">Project Page</a>
+                            <a href="https://github.com/alparius/pico" class="btn-outline-custom" target="_blank"><i class="fa fa-github"></i> Code</a>
+                        </div>
                     </div>
-                    <!-- End .project-info -->
                 </div>
-                <!-- End .project -->
             </div>
-        </div>
-        <div class="container">
-            <div class="row">
-                <div class="project shadow-large">
-                    <div class="project-image">
-                        <img src="images/isbi_visual.png" width="300" vspace="10"/>
-                    </div>
-                    <!-- End .project-image -->
-                    <div class="project-info">
-                        <h3><b>An Exceedingly Simple Consistency Regularization Method for Semi-Supervised Medical Image Segmentation</b></h3>
+
+            <div class="row shadow-large" style="background: #fff; padding: 20px; margin-bottom: 30px; border-radius: 5px; overflow: hidden;">
+                <div class="col-md-4 d-flex align-items-center justify-content-center">
+                    <img src="images/isbi_visual.png" alt="ISBI Visual" style="width: 100%; height: auto; border-radius: 4px;">
+                </div>
+                <div class="col-md-8">
+                    <div style="padding: 10px 0 0 15px;">
+                        <h3 style="margin-top: 0; color: #374054;"><b>Consistency Regularization Method for Semi-Supervised Medical Image Segmentation</b></h3>
                         <p>
                             The proposed method leverages segmentation of the interpolation of two unlabeled data for Semi-Supervised Cardiac MRI segmentation.
-                        <!-- </p>
-                        <p> -->
-                            <br>It has been accepted for publication at <b>IEEE ISBI, 2022</b>.
                         </p>
-                        <a href="https://ieeexplore.ieee.org/document/9761602">| Link |</a>
-                        <a href="https://arxiv.org/abs/2202.00677v2"> Arxiv |</a>
-                        <a href="https://github.com/hritam-98/ICT-MedSeg"> Code |</a>
+                        <p style="color: #777; font-style: italic; font-size: 0.95em;">
+                            Accepted at <b>IEEE ISBI, 2022</b>.
+                        </p>
+                        <div style="margin-top: 15px;">
+                            <a href="https://ieeexplore.ieee.org/document/9761602" class="btn-outline-custom" target="_blank">IEEE Xplore</a>
+                            <a href="https://arxiv.org/abs/2202.00677v2" class="btn-outline-custom" target="_blank">Arxiv</a>
+                            <a href="https://github.com/hritam-98/ICT-MedSeg" class="btn-outline-custom" target="_blank"><i class="fa fa-github"></i> Code</a>
+                        </div>
                     </div>
-                    <!-- End .project-info -->
                 </div>
-                <!-- End .project -->
             </div>
-        </div>
-        <div class="container">
-            <div class="row">
-                <div class="project shadow-large">
-                    <div class="project-image">
-                        <img src="images/pynet_visual.png" width="300" vspace="20"/>
-                    </div>
-                    <!-- End .project-image -->
-                    <div class="project-info">
-                        <h3><b>PY-Net: Rethinking Segmentation Frameworks with Dense Pyramidal Operations for Optic Disc and Cup segmentation from Retinal Fundus Images</b></h3>
+
+            <div class="row shadow-large" style="background: #fff; padding: 20px; margin-bottom: 30px; border-radius: 5px; overflow: hidden;">
+                <div class="col-md-4 d-flex align-items-center justify-content-center">
+                    <img src="images/pynet_visual.png" alt="PY-Net Visual" style="width: 100%; height: auto; border-radius: 4px;">
+                </div>
+                <div class="col-md-8">
+                    <div style="padding: 10px 0 0 15px;">
+                        <h3 style="margin-top: 0; color: #374054;"><b>PY-Net: Rethinking Segmentation Frameworks with Dense Pyramidal Operations</b></h3>
                         <p>
-                            A pipeline with auxiliary and densely-connected pyramidal decoder is proposed for segmentation of the Optic Disc and Cup from Optical Fundus images, and the subsequent classification into glaucomatous or not.
-                        <!-- </p>
-                        <p> -->
-                            <br>It has been accepted for publication at <b>Biomedical Signal Processing and Control, Elsevier</b>.
+                            A pipeline with auxiliary and densely-connected pyramidal decoder for segmentation of the Optic Disc and Cup from Optical Fundus images.
                         </p>
-                        <a href="https://www.sciencedirect.com/science/article/pii/S1746809423003282">| Link |</a>
+                        <p style="color: #777; font-style: italic; font-size: 0.95em;">
+                            Published in <b>Biomedical Signal Processing and Control, Elsevier</b>.
+                        </p>
+                        <div style="margin-top: 15px;">
+                            <a href="https://www.sciencedirect.com/science/article/pii/S1746809423003282" class="btn-outline-custom" target="_blank">ScienceDirect</a>
+                        </div>
                     </div>
-                    <!-- End .project-info -->
                 </div>
-                <!-- End .project -->
             </div>
+
         </div>
     </div>
-    <!-- End #projects -->
-
-    <!-- <div id="submissions" class="optional-section background-alt">
-        <h2 class="heading">Under Review</h2>
-    
-        <div class="optional-section-block">
-            <h3>DECO: Dense Estimation of 3D Human-Scene Contact In The Wild</h3>
-            <p>
-                <b>Submitted to: </b> International Conference on Computer Vision (ICCV), 2023
-            </p>
-        </div>
-    
-    </div> -->
-    <!-- End .optional-section -->
 
     <div id="skills">
         <h2 class="heading">Skills</h2>
-        <ul>
-            <li><img align="left" alt="Python" height="30px" src="https://raw.githubusercontent.com/github/explore/80688e429a7d4ef2fca1e82350fe8e3517d3494d/topics/python/python.png" /></li>
-            <li><img align="left" alt="Pytorch" height="30px" src="https://upload.wikimedia.org/wikipedia/commons/1/10/PyTorch_logo_icon.svg" /></li>
-            <li><img align="left" alt="Tensorflow" height="30px" src="https://raw.githubusercontent.com/github/explore/80688e429a7d4ef2fca1e82350fe8e3517d3494d/topics/tensorflow/tensorflow.png" /></li>
-            <li><img align="left" alt="Keras" height="30px" src="https://upload.wikimedia.org/wikipedia/commons/a/ae/Keras_logo.svg" /></li>
-            <li><img align="left" alt="LaTeX" height="30px" src="https://upload.wikimedia.org/wikipedia/commons/9/92/LaTeX_logo.svg" /></li><br>
-            <li><img align="left" alt="Git" height="30px" src="https://raw.githubusercontent.com/github/explore/80688e429a7d4ef2fca1e82350fe8e3517d3494d/topics/git/git.png" /></li>
-            <li><img align="left" alt="HTML" height="30px" src="https://upload.wikimedia.org/wikipedia/commons/thumb/6/61/HTML5_logo_and_wordmark.svg/1024px-HTML5_logo_and_wordmark.svg.png" /></li>
-            <li><img align="left" alt="JS" height="30px" src="https://upload.wikimedia.org/wikipedia/commons/6/6a/JavaScript-logo.png" /></li>
-            <li><img align="left" alt="Dash/Plotly" height="30px" src="https://upload.wikimedia.org/wikipedia/commons/8/8a/Plotly-logo.png" /></li><br>
-            <li><img align="left" alt="MATLAB" height="30px" src="https://raw.githubusercontent.com/github/explore/80688e429a7d4ef2fca1e82350fe8e3517d3494d/topics/matlab/matlab.png" /></li>
-            <li><img align="left" alt="Java" height="30px" src="https://upload.wikimedia.org/wikipedia/en/thumb/3/30/Java_programming_language_logo.svg/800px-Java_programming_language_logo.svg.png" /></li>
-        </ul>
+        <div class="container">
+            <div class="row">
+                <div class="col-md-12 text-center" style="padding-bottom: 50px;">
+                    <span class="skill-badge bg-tech">Python</span>
+                    <span class="skill-badge bg-tech">PyTorch</span>
+                    <span class="skill-badge bg-tech">TensorFlow</span>
+                    <span class="skill-badge bg-tech">Keras</span>
+                    <span class="skill-badge bg-tech">Java</span>
+                    <span class="skill-badge bg-tech">MATLAB</span>
+                    <br><br>
+                    <span class="skill-badge bg-tool">Git</span>
+                    <span class="skill-badge bg-tool">LaTeX</span>
+                    <span class="skill-badge bg-tool">HTML/CSS</span>
+                    <span class="skill-badge bg-tool">JavaScript</span>
+                    <span class="skill-badge bg-tool">Dash/Plotly</span>
+                </div>
+            </div>
+        </div>
     </div>
-    <!-- End #skills -->
+
+    <div id="philosophy" class="background-alt" style="padding: 50px 0;">
+        <div class="container text-center">
+            <h2 class="heading">Perspective</h2>
+            <div class="row">
+                <div class="col-md-8 col-md-offset-2 offset-md-2 mx-auto">
+                    <img src="images/machine_learning.png" class="img-fluid" alt="Machine Learning xkcd" 
+                         style="display: block; margin-left: auto; margin-right: auto; max-width: 85%; border: 1px solid #ddd; box-shadow: 0 5px 15px rgba(0,0,0,0.1); border-radius: 5px;">
+                    
+                    <p style="margin-top: 15px; color: #777; font-style: italic; font-size: 0.9em;">
+                        Image courtesy of <a href="https://xkcd.com/1838/" target="_blank" style="color: #337ab7;">xkcd</a>
+                    </p>
+                </div>
+            </div>
+        </div>
+    </div>
 
     <footer>
         <div class="container">
             <div class="row">
                 <div class="col-sm-5 copyright">
                     <p>
-                        Copyright &copy; <span id="current-year">2022</span> Agniv Chatterjee
+                        Copyright &copy; <span id="current-year"></span> Agniv Chatterjee
                     </p>
                 </div>
                 <div class="col-sm-2 top">
@@ -381,27 +380,21 @@
                 </div>
                 <div class="col-sm-5 social">
                     <ul>
-                        <li>
-                            <a href="https://github.com/ac5113" target="_blank"><i class="fa fa-github" aria-hidden="true"></i></a>
-                        </li>
-                        <li>
-                            <a href="mailto:agniv.chatterjee@utexas.edu" target="_blank"><i class="fa fa-regular fa-envelope" aria-hidden="true"></i></a>
-                        </li>
-                        <li>
-                            <a href="http://www.linkedin.com/in/JohnDoe13" target="_blank"><i class="fa fa-linkedin" aria-hidden="true"></i></a>
-                        </li>
-                        <li>
-                            <a href="https://scholar.google.com/citations?user=C69lK0gAAAAJ&hl=en" target="_blank"><i class="fa fa-brands fa-google" aria-hidden="true"></i></a>
-                        </li>
+                        <li><a href="https://github.com/ac5113" target="_blank"><i class="fa fa-github" aria-hidden="true"></i></a></li>
+                        <li><a href="mailto:agniv.chatterjee@utexas.edu" target="_blank"><i class="fa fa-envelope" aria-hidden="true"></i></a></li>
+                        <li><a href="https://www.linkedin.com/in/YOUR_LINKEDIN_ID_HERE" target="_blank"><i class="fa fa-linkedin" aria-hidden="true"></i></a></li>
+                        <li><a href="https://scholar.google.com/citations?user=C69lK0gAAAAJ&hl=en" target="_blank"><i class="fa fa-google" aria-hidden="true"></i></a></li>
                     </ul>
                 </div>
             </div>
         </div>
     </footer>
-    <!-- End footer -->
 
-    <script src="https://ajax.googleapis.com/ajax/libs/jquery/1.12.4/jquery.min.js"></script>
+    <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
     <script src="js/scripts.min.js"></script>
+    
+    <script>
+        document.getElementById('current-year').textContent = new Date().getFullYear();
+    </script>
 </body>
-
 </html>
