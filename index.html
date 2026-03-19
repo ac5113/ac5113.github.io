@@ -3,401 +3,403 @@
 
 <head>
     <meta charset="utf-8">
-    <meta http-equiv="X-UA-Compatible" content="IE=edge">
     <meta name="viewport" content="width=device-width, initial-scale=1">
-    
-    <meta name="description" content="Agniv Chatterjee is a Ph.D. student at UT Austin specializing in Computer Vision, Human-Object Interaction, and 3D Reconstruction.">
-    <meta name="keywords" content="Agniv Chatterjee, UT Austin, Computer Vision, PhD, Machine Learning, Research, 3D Reconstruction">
+    <meta name="description" content="Agniv Chatterjee – PhD Student at UT Austin working on 3D Computer Vision, Human-Object Interaction, and 3D Reconstruction.">
+    <meta name="keywords" content="Agniv Chatterjee, UT Austin, Computer Vision, PhD, Human-Object Interaction, 3D Reconstruction, CVPR, ICCV">
     <meta name="author" content="Agniv Chatterjee">
-
-    <title>Agniv Chatterjee | Portfolio</title>
-    
+    <title>Agniv Chatterjee</title>
     <link rel="shortcut icon" href="favicon.ico" type="image/x-icon">
     <link rel="icon" href="favicon.ico" type="image/x-icon">
-    
+
+    <!-- Prevent flash of wrong theme -->
+    <script>
+        (function() {
+            var t = localStorage.getItem('theme');
+            if (t === 'dark') document.documentElement.classList.add('dark');
+        })();
+    </script>
+
     <link href="https://fonts.googleapis.com/css?family=Lato:300,400,700,900" rel="stylesheet">
     <link rel="stylesheet" href="libs/font-awesome/css/font-awesome.min.css">
-    <link rel="stylesheet" href="https://fonts.googleapis.com/icon?family=Material+Icons">
-    
     <link href="css/bootstrap.min.css" rel="stylesheet">
     <link href="css/styles.css" rel="stylesheet">
-
-    <style>
-        .floating-menu {
-            z-index: 100;
-            position: fixed;
-            width: 100%;
-            text-align: center;
-        }
-        
-        /* Modern Badge Styles for Skills */
-        .skill-badge {
-            font-size: 1.1em;
-            margin: 5px;
-            padding: 8px 15px;
-            border-radius: 20px;
-            display: inline-block;
-            font-weight: 400;
-            box-shadow: 0 2px 5px rgba(0,0,0,0.1);
-        }
-        .bg-tech { background-color: #3498db; color: white; } /* Blue for core tech */
-        .bg-tool { background-color: #95a5a6; color: white; } /* Grey for tools */
-        
-        /* Button overrides for Publications */
-        .btn-outline-custom {
-            border: 1px solid #333;
-            color: #333;
-            padding: 5px 15px;
-            border-radius: 20px;
-            text-decoration: none;
-            margin-right: 10px;
-            transition: all 0.3s;
-        }
-        .btn-outline-custom:hover {
-            background-color: #333;
-            color: #fff;
-            text-decoration: none;
-        }
-        
-        /* Profile Image Styling */
-        .profile-img {
-            border-radius: 50%;
-            border: 4px solid #fff;
-            box-shadow: 0 4px 10px rgba(0,0,0,0.3);
-            margin-bottom: 20px;
-        }
-    </style>
 </head>
 
 <body>
-    <div id="mobile-menu-open" class="shadow-large">
-        <i class="fa fa-bars" aria-hidden="true"></i>
-    </div>
-    
-    <header>
-        <nav class="floating-menu">
-            <div id="mobile-menu-close">
-                <span>Close</span> <i class="fa fa-times" aria-hidden="true"></i>
-            </div>
-            <ul id="menu" class="shadow">
+
+    <!-- ===================== NAV ===================== -->
+    <nav id="site-nav">
+        <div class="nav-inner">
+            <ul id="nav-links">
                 <li><a href="#about">About</a></li>
+                <li><a href="#news">News</a></li>
+                <li><a href="#publications">Publications</a></li>
                 <li><a href="#experience">Experience</a></li>
-                <li><a href="#education">Education</a></li>
-                <li><a href="#projects">Publications</a></li>
-                <li><a href="#skills">Skills</a></li>
+                <li><a href="https://drive.google.com/file/d/1-mnoyV4NvBw6qJG9e70wozYXZrZTGsiD/view" target="_blank" class="no-scroll">CV</a></li>
             </ul>
-        </nav>    
-    </header>
-
-    <div id="lead" style="background-color: #2a2a2b">
-        <div id="lead-content">
-            <div class="text-center">
-                <img src="images/Face.jpg" class="profile-img" width="180" alt="Agniv Chatterjee"/>
-                <h1>Agniv Chatterjee</h1>
-                <h3 style="color: #e0e0e0; font-weight: 300; margin-top: 10px;">Ph.D. Student @ UT Austin | Computer Vision Researcher</h3>
-            </div>
-            <br>
-            <div style="margin-top: 20px;">
-                <a href="mailto:agniv.chatterjee@utexas.edu" class="btn-rounded-white"><i class="fa fa-envelope"></i> Email</a>
-                <a href="https://scholar.google.com/citations?user=C69lK0gAAAAJ&hl=en" target="_blank" class="btn-rounded-white"><i class="fa fa-graduation-cap"></i> Scholar</a>
-                <a href="https://github.com/ac5113" target="_blank" class="btn-rounded-white"><i class="fa fa-github"></i> GitHub</a>
-                <a href="https://www.linkedin.com/in/YOUR_LINKEDIN_ID_HERE" target="_blank" class="btn-rounded-white"><i class="fa fa-linkedin"></i> LinkedIn</a>
-                <a href="https://drive.google.com/file/d/1-mnoyV4NvBw6qJG9e70wozYXZrZTGsiD/view?usp=sharing" target="_blank" class="btn-rounded-white"><i class="fa fa-file-text"></i> Resume</a>
-            </div>
+            <button id="theme-toggle" aria-label="Toggle dark mode" title="Toggle dark mode">
+                <i class="fa fa-moon-o" id="theme-icon"></i>
+            </button>
+            <button id="mobile-nav-toggle" aria-label="Toggle navigation">
+                <i class="fa fa-bars"></i>
+            </button>
         </div>
+    </nav>
 
-        <div id="lead-overlay"></div>
-
-        <div id="lead-down">
-            <span>
-                <i class="fa fa-chevron-down" aria-hidden="true"></i>
-            </span>
-        </div>
-    </div>
-
-    <div id="about">
+    <!-- ===================== ABOUT ===================== -->
+    <section id="about">
         <div class="container">
-            <div class="row">
-                <div class="col-md-4">
-                    <h2 class="heading">About Me</h2>
+            <div class="about-inner">
+                <div class="about-photo-col">
+                    <img src="images/Face.jpg" alt="Agniv Chatterjee" class="profile-photo">
                 </div>
-                <div class="col-md-8">
-                    <p>
-                        I am a 2nd year doctoral student at the University of Texas at Austin, under the supervision of <a href="https://geopavlakos.github.io/" target="_blank">Dr. Georgios Pavlakos</a>. 
-                        My research currently focuses on understanding how humans interact with their surroundings, especially with objects, and how this interaction can be quantified using 3D representations.
+                <div class="about-bio-col">
+                    <h1 class="name-heading">Agniv Chatterjee</h1>
+                    <p class="title-line">PhD Student &nbsp;&middot;&nbsp; University of Texas at Austin</p>
+                    <div class="social-links">
+                        <a href="mailto:agniv.chatterjee@utexas.edu"><i class="fa fa-envelope"></i> Email</a>
+                        <a href="https://scholar.google.com/citations?user=C69lK0gAAAAJ&hl=en" target="_blank"><i class="fa fa-graduation-cap"></i> Scholar</a>
+                        <a href="https://github.com/ac5113" target="_blank"><i class="fa fa-github"></i> GitHub</a>
+                        <a href="https://www.linkedin.com/in/agnivc13/" target="_blank"><i class="fa fa-linkedin"></i> LinkedIn</a>
+                        <a href="https://drive.google.com/file/d/1-mnoyV4NvBw6qJG9e70wozYXZrZTGsiD/view" target="_blank"><i class="fa fa-file-text-o"></i> CV</a>
+                    </div>
+                    <p class="bio-text">
+                        I am a 2nd-year PhD student in Computer Science at the <a href="https://www.utexas.edu/" target="_blank">University of Texas at Austin</a>,
+                        advised by <a href="https://geopavlakos.github.io/" target="_blank">Dr. Georgios Pavlakos</a>.
+                        My research focuses on understanding how humans interact with objects in 3D &mdash;
+                        specifically recovering joint reconstructions of full-body humans and objects from
+                        natural images using contact constraints and physics-informed priors.
                     </p>
-                    <p>
-                        I have worked on various projects in the fields of Human-Object Interaction, Pose Classification and Contact Estimation, Tiny Object Detection and Classification, Audio Classification, and Biomedical Image Segmentation. 
-                        I am open to working on new projects on topics both known and unexplored by me.
+                    <p class="bio-text">
+                        Previously, I worked at the <a href="https://ps.is.mpg.de/" target="_blank">Perceiving Systems</a> group
+                        at <a href="https://is.mpg.de/" target="_blank">MPI for Intelligent Systems</a> (Tübingen), under
+                        <a href="https://is.mpg.de/person/black" target="_blank">Dr. Michael Black</a>, on dense human-scene
+                        contact estimation and human-object reconstruction. I have also done research at
+                        <a href="https://www.inria.fr/en/stars" target="_blank">INRIA Sophia Antipolis</a>,
+                        <a href="https://spire.ee.iisc.ac.in/" target="_blank">IISc</a>, and
+                        <a href="https://home.iitd.ac.in/" target="_blank">IIT Delhi</a>.
                     </p>
                 </div>
             </div>
         </div>
-    </div>
+    </section>
 
-    <div id="experience" class="background-alt">
-        <h2 class="heading">Experience</h2>
-        <div id="experience-timeline">
-            <div data-date="August, 2024 - Present">
-                <h3>University of Texas at Austin</h3>
-                <br>
-                <h3>Dept of Computer Science</h3>
-                <h4>Graduate Research Assistant</h4>
-                <p>
-                    Working on the joint reconstruction of full-body humans and objects from natural images under Dr. Georgios Pavlakos.
-                </p>
-            </div>
-
-            <div data-date="December, 2021 - June, 2025">
-                <h3>Max Planck Institute for Intelligent Systems, Tübingen</h3>
-                <h3>Perceiving Systems</h3>
-                <h4>Undergraduate Research Intern</h4>
-                <p>
-                    Developed a discrete contact annotation tool for vertex-level contact annotation under Dr. Michael Black.
-                    Created a vertex-level human contact dataset and developed a framework for detecting contact from natural images of humans (ICCV 2023).
-                </p>
-                <br>
-                <p>
-                    Subsequently, worked on joint reconstruction of human and object meshes from natural images given their contact regions (CVPR 2025).
-                </p>
-            </div>
-
-            <div data-date="May, 2022 - August, 2022">
-                <h3>INRIA, Sophia Antipolis</h3>
-                <br>
-                <h3>STARS Team</h3>
-                <h4>Undergraduate Research Intern</h4>
-                <p>
-                    Developed a combined detection-classification pipeline for High-Resolution images of Trichogramma wasps (VISAPP 2023).
-                </p>
-            </div>
-
-            <div data-date="January, 2021 - May, 2023">
-                <h3>Indian Institute of Science</h3>
-                <br>
-                <h3>Spire Lab</h3>
-                <h4>Undergraduate Research Intern</h4>
-                <p>
-                    Developed a framework for the diagnosis of patients as ALS/PD or Normal, based on phoneme utterance audios, under Dr. Prasanta Ghosh.
-                </p>
-            </div>
-
-            <div data-date="August, 2021 - September, 2022">
-                <h3>Indian Institute of Technology, Delhi</h3>
-                <h4>Undergraduate Research Intern</h4>
-                <p>
-                    Developed a framework for Automatic Pose Identification and Recommendation for Yoga asanas under Dr. Brejesh Lall.
-                </p>
-            </div>
-
-            <div data-date="May, 2021 – March, 2023">
-                <h3>Department of Electrical Engineering</h3>
-                <h4>Undergraduate Research Assistant</h4>
-                <p>
-                    Performed independent research under Dr. Debangshu Dey on Glaucoma detection using deep learning methods (Published in Biomedical Signal Processing and Control, Elsevier).
-                </p>
-            </div>
-        </div>
-    </div>
-
-    <div id="education">
-        <h2 class="heading">Education</h2>
-        <div class="education-block">
-            <h3>University of Texas at Austin</h3>
-            <span class="education-date">August 2024 - Present</span>
-            <h4>Ph.D. in Computer Science</h4>
-            <p>GPA: 4.0/4.0</p>
-        </div>
-        
-        <div class="education-block">
-            <h3>Jadavpur University</h3>
-            <span class="education-date">Sept 2019 - June 2023</span>
-            <h4>Bachelor of Electrical Engineering</h4>
-            <p>CGPA: 8.7/10.0</p>
-        </div>
-    </div>
-
-    <div id="projects" class="background-alt">
-        <h2 class="heading">Publications</h2>
+    <!-- ===================== NEWS ===================== -->
+    <section id="news">
         <div class="container">
-            
-            <div class="row shadow-large" style="background: #fff; padding: 20px; margin-bottom: 30px; border-radius: 5px; overflow: hidden;">
-                <div class="col-md-4 d-flex align-items-center justify-content-center">
-                    <img src="images/deco_teaser.png" alt="DECO Teaser" style="width: 100%; height: auto; border-radius: 4px;">
-                </div>
-                <div class="col-md-8">
-                    <div style="padding: 10px 0 0 15px;">
-                        <h3 style="margin-top: 0; color: #374054;"><b>DECO: Dense Estimation of 3D Human-Scene Contact In The Wild</b></h3>
-                        <p>
-                            Proposed a pipeline to infer dense 3D contact on the human body using scene and body-part context. 
-                            Also curated a dataset with in-the-wild images and crowdsourced dense 3D contact annotations.
-                        </p>
-                        <p style="color: #777; font-style: italic; font-size: 0.95em;">
-                            Accepted at <b>International Conference on Computer Vision (ICCV), 2023 (Oral)</b>.
-                        </p>
-                        <div style="margin-top: 15px;">
-                            <a href="https://deco.is.tue.mpg.de" class="btn-outline-custom" target="_blank">Project Page</a>
-                            <a href="https://github.com/sha2nkt/deco" class="btn-outline-custom" target="_blank"><i class="fa fa-github"></i> Code</a>
-                        </div>
-                    </div>
-                </div>
-            </div>
-
-            <div class="row shadow-large" style="background: #fff; padding: 20px; margin-bottom: 30px; border-radius: 5px; overflow: hidden;">
-                <div class="col-md-4 d-flex align-items-center justify-content-center">
-                    <img src="images/visapp_visual.png" alt="TrichANet Visual" style="width: 100%; height: auto; border-radius: 4px;">
-                </div>
-                <div class="col-md-8">
-                    <div style="padding: 10px 0 0 15px;">
-                        <h3 style="margin-top: 0; color: #374054;"><b>TrichANet: An Attentive Network for Trichogramma Classification</b></h3>
-                        <p>
-                            Proposed a combined detection-classification pipeline for the detection of tiny wasps from images, and subsequent classification into species.
-                        </p>
-                        <p style="color: #777; font-style: italic; font-size: 0.95em;">
-                            Accepted for oral presentation at <b>VISAPP 2023</b>.
-                        </p>
-                        <div style="margin-top: 15px;">
-                            <a href="https://www.scitepress.org/PublicationsDetail.aspx?ID=5IVILEia0fs=&t=1" class="btn-outline-custom" target="_blank">Paper</a>
-                            <a href="https://github.com/ac5113/TrichANet" class="btn-outline-custom" target="_blank"><i class="fa fa-github"></i> Code</a>
-                        </div>
-                    </div>
-                </div>
-            </div>
-
-            <div class="row shadow-large" style="background: #fff; padding: 20px; margin-bottom: 30px; border-radius: 5px; overflow: hidden;">
-                <div class="col-md-4 d-flex align-items-center justify-content-center">
-                    <img src="images/pico_teaser.png" alt="PICO Teaser" style="width: 100%; height: auto; border-radius: 4px;">
-                </div>
-                <div class="col-md-8">
-                    <div style="padding: 10px 0 0 15px;">
-                        <h3 style="margin-top: 0; color: #374054;"><b>PICO: Reconstructing 3D People In Contact with Objects</b></h3>
-                        <p>
-                            Proposed a framework for joint human-object reconstruction in 3D, using an optimization-based method guided by contact constraints.
-                        </p>
-                        <p style="color: #777; font-style: italic; font-size: 0.95em;">
-                            Accepted at <b>CVPR 2025</b>.
-                        </p>
-                        <div style="margin-top: 15px;">
-                            <a href="https://pico.is.tue.mpg.de/" class="btn-outline-custom" target="_blank">Project Page</a>
-                            <a href="https://github.com/alparius/pico" class="btn-outline-custom" target="_blank"><i class="fa fa-github"></i> Code</a>
-                        </div>
-                    </div>
-                </div>
-            </div>
-
-            <div class="row shadow-large" style="background: #fff; padding: 20px; margin-bottom: 30px; border-radius: 5px; overflow: hidden;">
-                <div class="col-md-4 d-flex align-items-center justify-content-center">
-                    <img src="images/isbi_visual.png" alt="ISBI Visual" style="width: 100%; height: auto; border-radius: 4px;">
-                </div>
-                <div class="col-md-8">
-                    <div style="padding: 10px 0 0 15px;">
-                        <h3 style="margin-top: 0; color: #374054;"><b>Consistency Regularization Method for Semi-Supervised Medical Image Segmentation</b></h3>
-                        <p>
-                            The proposed method leverages segmentation of the interpolation of two unlabeled data for Semi-Supervised Cardiac MRI segmentation.
-                        </p>
-                        <p style="color: #777; font-style: italic; font-size: 0.95em;">
-                            Accepted at <b>IEEE ISBI, 2022</b>.
-                        </p>
-                        <div style="margin-top: 15px;">
-                            <a href="https://ieeexplore.ieee.org/document/9761602" class="btn-outline-custom" target="_blank">IEEE Xplore</a>
-                            <a href="https://arxiv.org/abs/2202.00677v2" class="btn-outline-custom" target="_blank">Arxiv</a>
-                            <a href="https://github.com/hritam-98/ICT-MedSeg" class="btn-outline-custom" target="_blank"><i class="fa fa-github"></i> Code</a>
-                        </div>
-                    </div>
-                </div>
-            </div>
-
-            <div class="row shadow-large" style="background: #fff; padding: 20px; margin-bottom: 30px; border-radius: 5px; overflow: hidden;">
-                <div class="col-md-4 d-flex align-items-center justify-content-center">
-                    <img src="images/pynet_visual.png" alt="PY-Net Visual" style="width: 100%; height: auto; border-radius: 4px;">
-                </div>
-                <div class="col-md-8">
-                    <div style="padding: 10px 0 0 15px;">
-                        <h3 style="margin-top: 0; color: #374054;"><b>PY-Net: Rethinking Segmentation Frameworks with Dense Pyramidal Operations</b></h3>
-                        <p>
-                            A pipeline with auxiliary and densely-connected pyramidal decoder for segmentation of the Optic Disc and Cup from Optical Fundus images.
-                        </p>
-                        <p style="color: #777; font-style: italic; font-size: 0.95em;">
-                            Published in <b>Biomedical Signal Processing and Control, Elsevier</b>.
-                        </p>
-                        <div style="margin-top: 15px;">
-                            <a href="https://www.sciencedirect.com/science/article/pii/S1746809423003282" class="btn-outline-custom" target="_blank">ScienceDirect</a>
-                        </div>
-                    </div>
-                </div>
-            </div>
-
-        </div>
-    </div>
-
-    <div id="skills">
-        <h2 class="heading">Skills</h2>
-        <div class="container">
-            <div class="row">
-                <div class="col-md-12 text-center" style="padding-bottom: 50px;">
-                    <span class="skill-badge bg-tech">Python</span>
-                    <span class="skill-badge bg-tech">PyTorch</span>
-                    <span class="skill-badge bg-tech">TensorFlow</span>
-                    <span class="skill-badge bg-tech">Keras</span>
-                    <span class="skill-badge bg-tech">Java</span>
-                    <span class="skill-badge bg-tech">MATLAB</span>
-                    <br><br>
-                    <span class="skill-badge bg-tool">Git</span>
-                    <span class="skill-badge bg-tool">LaTeX</span>
-                    <span class="skill-badge bg-tool">HTML/CSS</span>
-                    <span class="skill-badge bg-tool">JavaScript</span>
-                    <span class="skill-badge bg-tool">Dash/Plotly</span>
-                </div>
-            </div>
-        </div>
-    </div>
-
-    <div id="philosophy" class="background-alt" style="padding: 50px 0;">
-        <div class="container text-center">
-            <h2 class="heading">Perspective</h2>
-            <div class="row">
-                <div class="col-md-8 col-md-offset-2 offset-md-2 mx-auto">
-                    <img src="images/machine_learning.png" class="img-fluid" alt="Machine Learning xkcd" 
-                         style="display: block; margin-left: auto; margin-right: auto; max-width: 85%; border: 1px solid #ddd; box-shadow: 0 5px 15px rgba(0,0,0,0.1); border-radius: 5px;">
-                    
-                    <p style="margin-top: 15px; color: #777; font-style: italic; font-size: 0.9em;">
-                        Image courtesy of <a href="https://xkcd.com/1838/" target="_blank" style="color: #337ab7;">xkcd</a>
-                    </p>
-                </div>
-            </div>
-        </div>
-    </div>
-
-    <footer>
-        <div class="container">
-            <div class="row">
-                <div class="col-sm-5 copyright">
-                    <p>
-                        Copyright &copy; <span id="current-year"></span> Agniv Chatterjee
-                    </p>
-                </div>
-                <div class="col-sm-2 top">
-                    <span id="to-top">
-                        <i class="fa fa-chevron-up" aria-hidden="true"></i>
+            <h2 class="section-heading">News</h2>
+            <ul class="news-list">
+                <li>
+                    <span class="news-year">[2025]</span>
+                    <span class="news-text">
+                        <a href="https://pico.is.tue.mpg.de/" target="_blank">PICO</a> accepted at
+                        <strong>CVPR 2025</strong>.
                     </span>
+                </li>
+                <li>
+                    <span class="news-year">[2024]</span>
+                    <span class="news-text">Started PhD in Computer Science at the University of Texas at Austin.</span>
+                </li>
+                <li class="news-older" style="display:none">
+                    <span class="news-year">[2023]</span>
+                    <span class="news-text">
+                        <a href="https://deco.is.tue.mpg.de/" target="_blank">DECO</a> accepted at
+                        <strong>ICCV 2023</strong> as an <em>Oral</em> presentation.
+                    </span>
+                </li>
+                <li class="news-older" style="display:none">
+                    <span class="news-year">[2023]</span>
+                    <span class="news-text">
+                        TrichANet accepted at <strong>VISAPP 2023</strong> as an <em>Oral</em> presentation.
+                    </span>
+                </li>
+            </ul>
+            <button id="news-toggle" class="toggle-btn">Show older news</button>
+        </div>
+    </section>
+
+    <!-- ===================== PUBLICATIONS ===================== -->
+    <section id="publications">
+        <div class="container">
+            <h2 class="section-heading">Publications</h2>
+
+            <!-- PICO -->
+            <div class="pub-item">
+                <div class="pub-thumbnail">
+                    <a href="https://pico.is.tue.mpg.de/" target="_blank">
+                        <img src="images/pico_teaser.png" alt="PICO teaser">
+                    </a>
                 </div>
-                <div class="col-sm-5 social">
-                    <ul>
-                        <li><a href="https://github.com/ac5113" target="_blank"><i class="fa fa-github" aria-hidden="true"></i></a></li>
-                        <li><a href="mailto:agniv.chatterjee@utexas.edu" target="_blank"><i class="fa fa-envelope" aria-hidden="true"></i></a></li>
-                        <li><a href="https://www.linkedin.com/in/agnivc13/" target="_blank"><i class="fa fa-linkedin" aria-hidden="true"></i></a></li>
-                        <li><a href="https://scholar.google.com/citations?user=C69lK0gAAAAJ&hl=en" target="_blank"><i class="fa fa-google" aria-hidden="true"></i></a></li>
-                    </ul>
+                <div class="pub-info">
+                    <p class="pub-title">
+                        <a href="https://pico.is.tue.mpg.de/" target="_blank">
+                            PICO: Reconstructing 3D People In Contact with Objects
+                        </a>
+                    </p>
+                    <p class="pub-authors">
+                        Alp&aacute;r Cseke, Shashank Tripathi, Sai Kumar Dwivedi, Arjun S. Lakshmipathy,
+                        <strong>Agniv Chatterjee</strong>, Michael J. Black, Dimitrios Tzionas
+                    </p>
+                    <p class="pub-venue">
+                        IEEE/CVF Conference on Computer Vision and Pattern Recognition (CVPR), 2025
+                    </p>
+                    <div class="pub-links">
+                        <a href="https://pico.is.tue.mpg.de/" target="_blank">Project Page</a>
+                        <a href="https://arxiv.org/abs/2504.17695" target="_blank">arXiv</a>
+                        <a href="https://github.com/alparius/pico" target="_blank">Code</a>
+                    </div>
                 </div>
+            </div>
+
+            <!-- DECO -->
+            <div class="pub-item">
+                <div class="pub-thumbnail">
+                    <a href="https://deco.is.tue.mpg.de/" target="_blank">
+                        <img src="images/deco_teaser.png" alt="DECO teaser">
+                    </a>
+                </div>
+                <div class="pub-info">
+                    <p class="pub-title">
+                        <a href="https://deco.is.tue.mpg.de/" target="_blank">
+                            DECO: Dense Estimation of 3D Human-Scene Contact In The Wild
+                        </a>
+                    </p>
+                    <p class="pub-authors">
+                        Shashank Tripathi, <strong>Agniv Chatterjee</strong>, Jean-Claude Passy,
+                        Hongwei Yi, Dimitrios Tzionas, Michael J. Black
+                    </p>
+                    <p class="pub-venue">
+                        International Conference on Computer Vision (ICCV), 2023
+                        <span class="award-badge">Oral</span>
+                    </p>
+                    <div class="pub-links">
+                        <a href="https://deco.is.tue.mpg.de/" target="_blank">Project Page</a>
+                        <a href="https://arxiv.org/abs/2309.15273" target="_blank">arXiv</a>
+                        <a href="https://github.com/sha2nkt/deco" target="_blank">Code</a>
+                    </div>
+                </div>
+            </div>
+
+            <!-- TrichANet -->
+            <div class="pub-item">
+                <div class="pub-thumbnail">
+                    <a href="https://www.scitepress.org/PublishedPapers/2023/116777/116777.pdf" target="_blank">
+                        <img src="images/trichanet.png" alt="TrichANet teaser">
+                    </a>
+                </div>
+                <div class="pub-info">
+                    <p class="pub-title">
+                        <a href="https://www.scitepress.org/PublishedPapers/2023/116777/116777.pdf" target="_blank">
+                            TrichANet: An Attentive Network for Trichogramma Classification
+                        </a>
+                    </p>
+                    <p class="pub-authors">
+                        <strong>Agniv Chatterjee</strong>, Snehashis Majhi, Vincent Calcagno, Fran&ccedil;ois Br&eacute;mond
+                    </p>
+                    <p class="pub-venue">
+                        International Conference on Computer Vision Theory and Applications (VISAPP), 2023
+                        <span class="award-badge">Oral</span>
+                    </p>
+                    <div class="pub-links">
+                        <a href="https://www.scitepress.org/PublishedPapers/2023/116777/116777.pdf" target="_blank">Paper</a>
+                        <a href="https://github.com/ac5113/TrichANet" target="_blank">Code</a>
+                    </div>
+                </div>
+            </div>
+
+            <!-- ISBI -->
+            <div class="pub-item">
+                <div class="pub-thumbnail">
+                    <a href="https://arxiv.org/abs/2202.00677" target="_blank">
+                        <img src="images/isbi_visual.png" alt="ISBI 2022 teaser">
+                    </a>
+                </div>
+                <div class="pub-info">
+                    <p class="pub-title">
+                        <a href="https://arxiv.org/abs/2202.00677" target="_blank">
+                            An Embarrassingly Simple Consistency Regularization Method for Semi-Supervised Medical Image Segmentation
+                        </a>
+                    </p>
+                    <p class="pub-authors">
+                        Hritam Basak, Rajarshi Bhattacharya, Rukhshanda Hussain, <strong>Agniv Chatterjee</strong>
+                    </p>
+                    <p class="pub-venue">
+                        IEEE International Symposium on Biomedical Imaging (ISBI), 2022
+                    </p>
+                    <div class="pub-links">
+                        <a href="https://arxiv.org/abs/2202.00677" target="_blank">arXiv</a>
+                        <a href="https://github.com/hritam-98/ICT-MedSeg" target="_blank">Code</a>
+                    </div>
+                </div>
+            </div>
+
+            <!-- PY-Net -->
+            <div class="pub-item">
+                <div class="pub-thumbnail">
+                    <a href="https://www.sciencedirect.com/science/article/pii/S1746809423003282" target="_blank">
+                        <img src="images/pynet_visual.png" alt="PY-Net teaser">
+                    </a>
+                </div>
+                <div class="pub-info">
+                    <p class="pub-title">
+                        <a href="https://www.sciencedirect.com/science/article/pii/S1746809423003282" target="_blank">
+                            PY-Net: Rethinking Segmentation Frameworks with Dense Pyramidal Operations for Optic Disc and Cup Segmentation from Retinal Fundus Images
+                        </a>
+                    </p>
+                    <p class="pub-authors">
+                        Rajarshi Bhattacharya, Rukhshanda Hussain, <strong>Agniv Chatterjee</strong>,
+                        Dwipayan Paul, Saptarshi Chatterjee, Debangshu Dey
+                    </p>
+                    <p class="pub-venue">
+                        Biomedical Signal Processing and Control, Vol. 85, Elsevier, 2023
+                    </p>
+                    <div class="pub-links">
+                        <a href="https://www.sciencedirect.com/science/article/pii/S1746809423003282" target="_blank">ScienceDirect</a>
+                    </div>
+                </div>
+            </div>
+
+        </div>
+    </section>
+
+    <!-- ===================== EXPERIENCE ===================== -->
+    <section id="experience">
+        <div class="container">
+            <h2 class="section-heading">Experience</h2>
+
+            <div class="exp-item">
+                <div class="exp-header">
+                    <span class="exp-org">University of Texas at Austin</span>
+                    <span class="exp-date">Aug 2024 &ndash; Present</span>
+                </div>
+                <p class="exp-role">Graduate Research Assistant &mdash; Dept. of Computer Science</p>
+                <p class="exp-desc">
+                    Joint reconstruction of full-body humans and objects from natural images,
+                    advised by <a href="https://geopavlakos.github.io/" target="_blank">Dr. Georgios Pavlakos</a>.
+                </p>
+            </div>
+
+            <div class="exp-item">
+                <div class="exp-header">
+                    <span class="exp-org">Max Planck Institute for Intelligent Systems, Tübingen</span>
+                    <span class="exp-date">Dec 2021 &ndash; Jun 2025</span>
+                </div>
+                <p class="exp-role">Undergraduate Research Intern &mdash; Perceiving Systems</p>
+                <p class="exp-desc">
+                    Developed DECO, a vertex-level human contact annotation tool and contact detection
+                    framework (ICCV 2023, Oral). Subsequently developed PICO for joint human-object
+                    mesh reconstruction using contact constraints (CVPR 2025).
+                    Advised by <a href="https://is.mpg.de/person/black" target="_blank">Dr. Michael Black</a>.
+                </p>
+            </div>
+
+            <div class="exp-item">
+                <div class="exp-header">
+                    <span class="exp-org">INRIA, Sophia Antipolis</span>
+                    <span class="exp-date">May 2022 &ndash; Aug 2022</span>
+                </div>
+                <p class="exp-role">Undergraduate Research Intern &mdash; STARS Team</p>
+                <p class="exp-desc">
+                    Built a combined detection-classification pipeline for Trichogramma wasp species
+                    identification from microscopy images (VISAPP 2023, Oral).
+                </p>
+            </div>
+
+            <div class="exp-item">
+                <div class="exp-header">
+                    <span class="exp-org">Indian Institute of Science</span>
+                    <span class="exp-date">Jan 2021 &ndash; May 2023</span>
+                </div>
+                <p class="exp-role">Undergraduate Research Intern &mdash; Spire Lab</p>
+                <p class="exp-desc">
+                    Neurological disorder diagnosis (ALS / Parkinson&apos;s disease) via
+                    phoneme utterance audio analysis, advised by Dr. Prasanta Ghosh.
+                </p>
+            </div>
+
+            <div class="exp-item">
+                <div class="exp-header">
+                    <span class="exp-org">Indian Institute of Technology, Delhi</span>
+                    <span class="exp-date">Aug 2021 &ndash; Sep 2022</span>
+                </div>
+                <p class="exp-role">Undergraduate Research Intern</p>
+                <p class="exp-desc">
+                    Automatic pose identification and yoga asana recommendation using deep learning,
+                    advised by Dr. Brejesh Lall.
+                </p>
+            </div>
+
+            <div class="exp-item">
+                <div class="exp-header">
+                    <span class="exp-org">Jadavpur University &mdash; Dept. of Electrical Engineering</span>
+                    <span class="exp-date">May 2021 &ndash; Mar 2023</span>
+                </div>
+                <p class="exp-role">Undergraduate Research Assistant</p>
+                <p class="exp-desc">
+                    Glaucoma detection from optical fundus images using deep learning
+                    (PY-Net, Elsevier BSPC 2023), advised by Dr. Debangshu Dey.
+                </p>
+            </div>
+
+        </div>
+    </section>
+
+    <!-- ===================== EDUCATION ===================== -->
+    <section id="education">
+        <div class="container">
+            <h2 class="section-heading">Education</h2>
+
+            <div class="exp-item">
+                <div class="exp-header">
+                    <span class="exp-org">University of Texas at Austin</span>
+                    <span class="exp-date">Aug 2024 &ndash; Present</span>
+                </div>
+                <p class="exp-role">PhD in Computer Science &nbsp;&middot;&nbsp; GPA: 4.0 / 4.0</p>
+            </div>
+
+            <div class="exp-item">
+                <div class="exp-header">
+                    <span class="exp-org">Jadavpur University</span>
+                    <span class="exp-date">Sep 2019 &ndash; Jun 2023</span>
+                </div>
+                <p class="exp-role">Bachelor of Electrical Engineering &nbsp;&middot;&nbsp; CGPA: 8.7 / 10.0</p>
+            </div>
+
+        </div>
+    </section>
+
+    <!-- ===================== XKCD ===================== -->
+    <section id="xkcd-aside">
+        <div class="container">
+            <div class="xkcd-wrap">
+                <a href="https://xkcd.com/1838/" target="_blank">
+                    <img src="images/machine_learning.png" alt="xkcd: Machine Learning">
+                </a>
+                <p class="xkcd-caption">
+                    <a href="https://xkcd.com/1838/" target="_blank">xkcd #1838</a>
+                    &nbsp;&mdash;&nbsp; this comic lives rent-free in my head.
+                </p>
+            </div>
+        </div>
+    </section>
+
+    <!-- ===================== FOOTER ===================== -->
+    <footer id="site-footer">
+        <div class="container">
+            <div class="footer-inner">
+                <p class="footer-copy">&copy; <span id="current-year"></span> Agniv Chatterjee</p>
+                <ul class="footer-social">
+                    <li><a href="mailto:agniv.chatterjee@utexas.edu" title="Email"><i class="fa fa-envelope"></i></a></li>
+                    <li><a href="https://scholar.google.com/citations?user=C69lK0gAAAAJ&hl=en" target="_blank" title="Google Scholar"><i class="fa fa-graduation-cap"></i></a></li>
+                    <li><a href="https://github.com/ac5113" target="_blank" title="GitHub"><i class="fa fa-github"></i></a></li>
+                    <li><a href="https://www.linkedin.com/in/agnivc13/" target="_blank" title="LinkedIn"><i class="fa fa-linkedin"></i></a></li>
+                </ul>
             </div>
         </div>
     </footer>
 
     <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
     <script src="js/scripts.min.js"></script>
-    
-    <script>
-        document.getElementById('current-year').textContent = new Date().getFullYear();
-    </script>
+
 </body>
 </html>
