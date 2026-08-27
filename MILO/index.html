@@ -1,0 +1,688 @@
+<!DOCTYPE html>
+<html lang="en" data-theme="light">
+  <head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1" />
+    <title>MILO: Reconstructing Humans and Objects in Interaction using Large Reconstruction Models</title>
+    <meta
+      name="description"
+      content="MILO reconstructs detailed 3D human-object interactions from a single image by interpreting the geometric scaffold produced by a Large Reconstruction Model. ECCV 2026."
+    />
+    <meta name="keywords" content="MILO, 3D human-object interaction, HOI, Large Reconstruction Models, SMPL-H, single image reconstruction, ECCV 2026" />
+    <meta property="og:title" content="MILO: Reconstructing Humans and Objects in Interaction using Large Reconstruction Models" />
+    <meta property="og:description" content="Detailed 3D human-object reconstruction from a single image, ECCV 2026." />
+    <meta property="og:type" content="website" />
+    <meta property="og:image" content="assets/og.jpg" />
+    <link rel="icon" href="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 64 64'%3E%3Crect width='64' height='64' rx='14' fill='%232f6bd8'/%3E%3Ctext x='32' y='42' text-anchor='middle' font-size='30' font-family='Arial,sans-serif' font-weight='800' fill='%23ffffff'%3EM%3C/text%3E%3C/svg%3E" />
+
+    <link rel="preconnect" href="https://fonts.googleapis.com" />
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+    <link
+      href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&family=Newsreader:opsz,wght@6..72,400;6..72,500;6..72,600&display=swap"
+      rel="stylesheet"
+    />
+
+    <style>
+      :root {
+        --blue: #4387f0;
+        --orange: #ff4500;
+        --human: #4387f0;
+        --object: #ff4500;
+        --text: #15181f;
+        --muted: #3a414f;
+        --faint: #5b6474;
+        --link: #2f6bd8;
+        --bg: #ffffff;
+        --card: #ffffff;
+        --line: #e4e8f0;
+        --code-bg: #f4f6fb;
+        --shadow: 0 1px 2px rgba(17, 24, 39, 0.04), 0 8px 26px rgba(17, 24, 39, 0.07);
+        --shadow-lg: 0 14px 40px rgba(17, 24, 39, 0.13);
+      }
+      html[data-theme="dark"] {
+        --blue: #6f9bff;
+        --orange: #ff7a4d;
+        --link: #88b2ff;
+        --text: #eef1f7;
+        --muted: #c7cedb;
+        --faint: #9da6b6;
+        --bg: #0c0f16;
+        --card: #141925;
+        --line: #262d3c;
+        --code-bg: #0f1320;
+        --shadow: 0 1px 2px rgba(0, 0, 0, 0.4), 0 10px 30px rgba(0, 0, 0, 0.45);
+        --shadow-lg: 0 16px 48px rgba(0, 0, 0, 0.55);
+      }
+
+      * { box-sizing: border-box; }
+      html { scroll-behavior: smooth; }
+      body {
+        margin: 0; color: var(--text); background: var(--bg);
+        font-family: "Inter", -apple-system, BlinkMacSystemFont, "Segoe UI", Helvetica, Arial, sans-serif;
+        font-size: 16px; line-height: 1.65;
+        -webkit-font-smoothing: antialiased;
+        transition: background 0.3s ease, color 0.3s ease;
+      }
+      /* gradient brand strip */
+      body::before {
+        content: ""; position: fixed; top: 0; left: 0; right: 0; height: 3px; z-index: 100;
+        background: linear-gradient(90deg, var(--blue), var(--orange));
+      }
+      a { color: var(--link); text-decoration: none; }
+      a:hover { text-decoration: underline; }
+      img, video { max-width: 100%; }
+      .container { width: min(980px, calc(100% - 32px)); margin: 0 auto; }
+
+      /* floating theme toggle */
+      .theme-btn {
+        position: fixed; top: 16px; right: 16px; z-index: 101;
+        width: 42px; height: 42px; border-radius: 12px; cursor: pointer;
+        border: 1px solid var(--line); background: var(--card); color: var(--text);
+        display: grid; place-items: center; font-size: 1.1rem; box-shadow: var(--shadow);
+        transition: transform 0.15s ease, border-color 0.2s ease;
+      }
+      .theme-btn:hover { transform: translateY(-2px); border-color: var(--blue); }
+
+      /* ---------- HEADER ---------- */
+      header { padding: 60px 0 34px; text-align: center; position: relative; overflow: hidden; }
+      header::after {
+        content: ""; position: absolute; inset: 0; z-index: -1;
+        background:
+          radial-gradient(55% 55% at 20% 0%, rgba(67, 135, 240, 0.12), transparent 60%),
+          radial-gradient(45% 45% at 85% 6%, rgba(255, 69, 0, 0.10), transparent 60%);
+      }
+      .venue {
+        display: inline-block; margin: 0 0 16px; padding: 5px 14px; border-radius: 999px;
+        background: rgba(67, 135, 240, 0.12); border: 1px solid var(--line);
+        color: var(--link); font-size: 0.8rem; font-weight: 700; letter-spacing: 0.06em; text-transform: uppercase;
+      }
+      h1 {
+        max-width: 960px; margin: 0 auto 18px;
+        font-family: "Newsreader", Georgia, serif; font-weight: 500;
+        font-size: clamp(2rem, 4.7vw, 3.35rem); line-height: 1.1; letter-spacing: -0.01em;
+      }
+      h1 .milo {
+        font-weight: 600;
+        background: linear-gradient(120deg, var(--blue), var(--orange));
+        -webkit-background-clip: text; background-clip: text;
+        -webkit-text-fill-color: transparent; color: transparent;
+      }
+      .authors { font-size: 1.08rem; margin: 0; }
+      .authors a { font-weight: 600; }
+      .affiliation { margin: 6px 0 0; color: var(--muted); font-size: 0.97rem; }
+      .affiliation sup, .authors sup { color: var(--blue); }
+
+      .resources { display: flex; justify-content: center; flex-wrap: wrap; gap: 11px; margin-top: 26px; }
+      .button {
+        display: inline-flex; align-items: center; gap: 8px; min-height: 40px;
+        padding: 9px 18px; border: 1px solid var(--line); border-radius: 11px;
+        background: var(--card); color: var(--text); font-size: 0.95rem; font-weight: 600;
+        transition: transform 0.15s ease, box-shadow 0.2s ease, border-color 0.2s ease;
+      }
+      .button:hover { text-decoration: none; transform: translateY(-2px); box-shadow: var(--shadow); border-color: var(--blue); }
+      .button.primary {
+        background: linear-gradient(120deg, var(--blue), #3f7ee6); color: #fff; border-color: transparent;
+      }
+      .button.primary:hover { border-color: transparent; }
+      .button.disabled { color: var(--faint); cursor: default; }
+      .button.disabled:hover { transform: none; box-shadow: none; border-color: var(--line); }
+
+      .summary {
+        max-width: 760px; margin: 26px auto 0; color: var(--muted);
+        font-family: "Newsreader", Georgia, serif; font-size: 1.18rem; line-height: 1.45;
+      }
+      .summary .key-blue { color: var(--human); font-weight: 600; }
+      .summary .key-orange { color: var(--object); font-weight: 600; }
+
+      /* ---------- SECTIONS ---------- */
+      section { padding: 44px 0; border-bottom: 1px solid var(--line); }
+      h2 {
+        margin: 0 0 22px; text-align: center; font-family: "Newsreader", Georgia, serif;
+        font-weight: 500; font-size: clamp(1.5rem, 3vw, 2rem); letter-spacing: -0.01em;
+      }
+      h2::after {
+        content: ""; display: block; width: 50px; height: 3px; margin: 12px auto 0;
+        border-radius: 3px; background: linear-gradient(90deg, var(--blue), var(--orange));
+      }
+      h3 { margin: 28px 0 12px; font-size: 1.12rem; }
+      p { margin: 0 0 14px; }
+      .abstract { max-width: 850px; margin: 0 auto; text-align: justify; color: var(--muted); font-size: 1.04rem; }
+      .abstract strong { color: var(--text); }
+
+      /* TL;DR highlight cards */
+      .highlights { display: grid; grid-template-columns: repeat(3, 1fr); gap: 16px; }
+      @media (max-width: 760px) { .highlights { grid-template-columns: 1fr; } }
+      .hl {
+        position: relative; overflow: hidden; background: var(--card);
+        border: 1px solid var(--line); border-radius: 16px; padding: 22px 20px 20px;
+        box-shadow: var(--shadow); transition: transform 0.18s ease, box-shadow 0.2s ease;
+      }
+      .hl:hover { transform: translateY(-3px); box-shadow: var(--shadow-lg); }
+      .hl::before { content: ""; position: absolute; left: 0; top: 0; bottom: 0; width: 4px; background: linear-gradient(var(--blue), var(--orange)); }
+      .hl .ic { display: flex; margin-bottom: 11px; color: var(--blue); }
+      .hl .ic svg { width: 30px; height: 30px; }
+      .hl h3 { margin: 0 0 6px; font-size: 1.04rem; }
+      .hl p { margin: 0; font-size: 0.93rem; color: var(--muted); }
+
+      figure { margin: 0; }
+      .media-card {
+        background: var(--card); border: 1px solid var(--line); border-radius: 16px;
+        padding: 12px; box-shadow: var(--shadow);
+        transition: transform 0.18s ease, box-shadow 0.2s ease;
+      }
+      .media-card:hover { transform: translateY(-3px); box-shadow: var(--shadow-lg); }
+      figure.method { max-width: 960px; margin: 0 auto; }
+      figure.method img { display: block; width: 100%; border-radius: 10px; background: #fff; }
+      figcaption {
+        max-width: 760px; margin: 14px auto 2px; padding: 0 6px;
+        color: var(--muted); font-size: 0.95rem; line-height: 1.55; text-align: center;
+      }
+      figcaption b { color: var(--text); font-weight: 600; }
+
+      .vidband { padding: 34px 0; }
+      .legend { display: flex; flex-wrap: wrap; justify-content: center; align-items: center; gap: 12px; margin: 16px auto 0; }
+      .leg-item { display: inline-flex; align-items: center; gap: 8px; padding: 6px 14px; border: 1px solid var(--line); border-radius: 999px; background: var(--card); color: var(--muted); font-size: 0.9rem; font-weight: 600; box-shadow: var(--shadow); }
+      .legend .sw { width: 12px; height: 12px; border-radius: 4px; display: inline-block; }
+
+      /* ---------- CAROUSEL ---------- */
+      .result-block { margin: 0 auto 34px; max-width: 980px; }
+      .result-head { display: flex; flex-wrap: wrap; align-items: baseline; gap: 10px; justify-content: space-between; margin: 0 2px 12px; }
+      .result-head h3 { margin: 0; font-family: "Newsreader", Georgia, serif; font-weight: 600; font-size: 1.22rem; }
+      .vcarousel { position: relative; --cf-h: clamp(150px, 33.6vw, 340px); }
+      /* sliding carousel (dataset results) */
+      .vc-viewport {
+        position: relative; background: #ffffff; border: 1px solid var(--line);
+        border-radius: 14px; overflow: hidden; box-shadow: var(--shadow);
+        aspect-ratio: var(--vc-ratio, 32 / 15);
+      }
+      .vc-slide { position: absolute; inset: 0; display: grid; place-items: center; transition: transform 0.55s cubic-bezier(0.4, 0, 0.2, 1); will-change: transform; }
+      .vc-slide video { position: absolute; inset: 0; width: 100%; height: 100%; object-fit: contain; display: block; background: #ffffff; }
+      /* coverflow carousel (teaser hero) */
+      .cf-stage {
+        position: relative; height: calc(var(--cf-h) + 44px); overflow: hidden;
+      }
+      .cf-card {
+        position: absolute; top: 50%; left: 50%; z-index: 1; opacity: 0;
+        transform: translate(-50%, -50%) scale(0.6); cursor: pointer; pointer-events: none;
+        transition: transform 0.6s cubic-bezier(0.22, 0.61, 0.36, 1), opacity 0.5s ease;
+        will-change: transform, opacity;
+      }
+      .cf-card video {
+        display: block; height: var(--cf-h); width: auto; max-width: none;
+        border-radius: 14px; background: #ffffff; box-shadow: 0 5px 16px rgba(10, 14, 22, 0.14);
+      }
+      .cf-card.is-center { transform: translate(-50%, -50%) scale(1); opacity: 1; z-index: 3; pointer-events: auto; }
+      .cf-card.is-left  { transform: translate(calc(-50% - var(--cf-x, 60%)), -50%) scale(var(--cf-s, 0.78)); opacity: var(--cf-o, 0.45); z-index: 2; pointer-events: auto; }
+      .cf-card.is-right { transform: translate(calc(-50% + var(--cf-x, 60%)), -50%) scale(var(--cf-s, 0.78)); opacity: var(--cf-o, 0.45); z-index: 2; pointer-events: auto; }
+      .cf-card.is-center video { box-shadow: 0 8px 22px rgba(10, 14, 22, 0.18); }
+      .cf-card.is-left video, .cf-card.is-right video { filter: brightness(0.99); }
+      /* pair coverflow (in-the-wild): two front cards side by side, peeks tucked behind */
+      .cf-pair { --cf-h: min(126px, 11.8vw); }
+      .cf-card.is-cl, .cf-card.is-cr { opacity: 1; z-index: 3; pointer-events: auto; }
+      .cf-card.is-cl { transform: translate(calc(-100% - 6px), -50%); }
+      .cf-card.is-cr { transform: translate(6px, -50%); }
+      .cf-card.is-cl video, .cf-card.is-cr video { box-shadow: 0 8px 22px rgba(10, 14, 22, 0.18); }
+      .cf-pair .cf-card.is-left  { transform: translate(calc(-150% - 8px), -50%) scale(var(--cf-s, 0.78)); }
+      .cf-pair .cf-card.is-right { transform: translate(calc(50% + 8px), -50%) scale(var(--cf-s, 0.78)); }
+      @media (max-width: 760px) { .vcarousel { --cf-x: 66%; } }
+      .vc-btn {
+        position: absolute; top: 50%; transform: translateY(-50%); z-index: 6;
+        width: 44px; height: 44px; border-radius: 50%; border: none; cursor: pointer;
+        background: rgba(10, 12, 16, 0.5); color: #fff; font-size: 1.5rem; line-height: 1;
+        display: grid; place-items: center; backdrop-filter: blur(4px);
+        transition: background 0.2s ease, transform 0.15s ease;
+      }
+      .vc-btn:hover { background: rgba(10, 12, 16, 0.82); }
+      .vc-btn:active { transform: translateY(-50%) scale(0.9); }
+      .vc-prev { left: 13px; } .vc-next { right: 13px; }
+      .vc-dots { display: flex; justify-content: center; gap: 9px; margin-top: 14px; }
+      .vc-dot { width: 9px; height: 9px; border-radius: 999px; border: none; cursor: pointer; background: var(--line); padding: 0; transition: width 0.22s ease, background 0.22s ease; }
+      .vc-dot.active { width: 26px; background: var(--blue); }
+      /* ---------- BIBTEX ---------- */
+      .codebox { position: relative; max-width: 840px; margin: 0 auto; padding: 18px; overflow-x: auto; border: 1px solid var(--line); border-radius: 14px; background: var(--code-bg); }
+      pre { margin: 0; font-family: "SFMono-Regular", ui-monospace, Consolas, monospace; font-size: 0.87rem; line-height: 1.6; color: var(--muted); }
+      .copy { position: absolute; top: 12px; right: 12px; padding: 6px 12px; border: 1px solid var(--line); border-radius: 8px; background: var(--card); color: var(--muted); cursor: pointer; font: inherit; font-size: 0.78rem; font-weight: 600; }
+      .copy:hover { color: var(--blue); border-color: var(--blue); }
+
+      /* ---------- RELATED + FOOTER ---------- */
+      .link-group { margin-bottom: 22px; }
+      .link-group:last-child { margin-bottom: 0; }
+      .link-label { text-align: center; color: var(--faint); font-size: 0.78rem; font-weight: 700; letter-spacing: 0.09em; text-transform: uppercase; margin: 0 0 13px; }
+      .chips { display: flex; justify-content: center; flex-wrap: wrap; gap: 10px; }
+      .chip { display: inline-flex; align-items: center; gap: 6px; padding: 8px 15px; border-radius: 999px; border: 1px solid var(--line); background: var(--card); color: var(--muted); font-size: 0.9rem; font-weight: 500; transition: all 0.18s ease; }
+      .chip:hover { border-color: var(--blue); color: var(--blue); text-decoration: none; transform: translateY(-1px); }
+      main section:last-child { border-bottom: none; padding-bottom: 56px; }
+      .ack { max-width: 760px; margin: 0 auto; color: var(--muted); font-size: 0.95rem; text-align: center; }
+      .ack p:last-child { margin-bottom: 0; }
+
+      /* scroll reveal (added via JS; no-JS keeps content visible) */
+      .reveal { opacity: 0; transform: translateY(16px); transition: opacity 0.6s ease, transform 0.6s ease; }
+      .reveal.in { opacity: 1; transform: none; }
+
+      @media (max-width: 760px) {
+        header { padding-top: 44px; }
+        .abstract { text-align: left; }
+      }
+
+      @media (max-width: 560px) {
+        section { padding: 32px 0; }
+        header { padding: 38px 0 26px; }
+        .resources { gap: 8px; }
+        .button { padding: 8px 14px; font-size: 0.9rem; min-height: 38px; }
+        .summary { font-size: 1.06rem; }
+        .theme-btn { top: 12px; right: 12px; width: 38px; height: 38px; }
+        .vc-btn { width: 38px; height: 38px; font-size: 1.25rem; }
+        .vc-prev { left: 8px; } .vc-next { right: 8px; }
+        .result-head h3 { font-size: 1.1rem; }
+        .hl { padding: 18px 16px 16px; }
+        figcaption { font-size: 0.9rem; }
+      }
+
+      @media (prefers-reduced-motion: reduce) {
+        .reveal { opacity: 1; transform: none; transition: none; }
+        html { scroll-behavior: auto; }
+      }
+    </style>
+  </head>
+
+  <body>
+    <button class="theme-btn" id="themeToggle" aria-label="Toggle dark mode" title="Toggle light/dark">🌙</button>
+
+    <header>
+      <div class="container">
+        <p class="venue">ECCV 2026</p>
+        <h1><span class="milo">MILO</span>: Reconstructing Humans and Objects in Interaction using Large Reconstruction Models</h1>
+        <p class="authors">
+          <a href="https://ac5113.github.io/" target="_blank" rel="noopener">Agniv Chatterjee</a>,
+          <a href="https://geopavlakos.github.io/" target="_blank" rel="noopener">Georgios Pavlakos</a>
+        </p>
+        <p class="affiliation">The University of Texas at Austin</p>
+
+        <div class="resources" aria-label="Project resources">
+          <a class="button primary" href="#" target="_blank" rel="noopener">arXiv</a>
+          <a class="button" href="assets/poster.pdf" target="_blank" rel="noopener">Poster</a>
+          <a class="button" href="https://github.com/ac5113/MILO" target="_blank" rel="noopener">Code</a>
+        </div>
+
+        <p class="summary">
+          MILO recovers 3D <span class="key-blue">humans</span> and <span class="key-orange">objects</span> in
+          interaction from a single RGB image by <em>interpreting</em> the geometric scaffold produced by a Large
+          Reconstruction Model.
+        </p>
+      </div>
+    </header>
+
+    <main>
+      <section class="vidband">
+        <div class="container">
+          <div class="vcarousel" id="cPicoTeaser"></div>
+        </div>
+      </section>
+
+      <section id="tldr">
+        <div class="container">
+          <h2>TL;DR</h2>
+          <div class="highlights">
+            <div class="hl">
+              <div class="ic">
+                <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.7" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M12 2 21 7v10l-9 5-9-5V7l9-5Z"/><path d="M3 7l9 5 9-5"/><path d="M12 12v10"/></svg>
+              </div>
+              <h3>LRMs as an HOI scaffold</h3>
+              <p>Large Reconstruction Models capture the relative human–object arrangement and proximity cues, giving a powerful geometric scaffold for interaction.</p>
+            </div>
+            <div class="hl">
+              <div class="ic">
+                <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.7" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><circle cx="12" cy="4.5" r="2.5"/><path d="M12 7v8"/><path d="M6 10.5h12"/><path d="M9 21l3-6 3 6"/></svg>
+              </div>
+              <h3>Explain, don't fit</h3>
+              <p>Instead of ambiguous reprojection objectives, we reframe HOI as <em>interpreting</em> the LRM mesh: fit SMPL-H to the human part and optionally align a template to the object.</p>
+            </div>
+            <div class="hl">
+              <div class="ic">
+                <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.7" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M7 4h10v4a5 5 0 0 1-10 0V4Z"/><path d="M7 6H4v1a3 3 0 0 0 3 3"/><path d="M17 6h3v1a3 3 0 0 1-3 3"/><path d="M9 21h6"/><path d="M12 13v5"/></svg>
+              </div>
+              <h3>SOTA without contact</h3>
+              <p>MILO reaches strong accuracy across InterCap, HODome and IMHD using <em>weaker</em> information than prior work — with no ground-truth contact.</p>
+            </div>
+          </div>
+        </div>
+      </section>
+
+      <section id="abstract">
+        <div class="container">
+          <h2>Abstract</h2>
+          <div class="abstract">
+            <p>
+              Estimation of Human-Object Interactions in 3D (3D HOI) is a fundamental problem in 3D computer
+              vision with broad applications in AR/VR, robotics, and embodied AI. However, HOI estimation remains
+              challenging due to depth ambiguities, occlusions, and object shape variability.
+            </p>
+            <p>
+              We present <strong>MILO</strong>, a framework that leverages the visual capabilities of
+              <strong>Large Reconstruction Models</strong> to recover detailed 3D human-object reconstructions
+              from a single image. Our key observation is that LRMs provide a geometric scaffold that preserves
+              relative human-object arrangement and proximity cues. MILO segments the LRM mesh into human and
+              object components, fits SMPL-H to the human part, and optionally aligns an object template to the
+              object part. MILO achieves strong reconstruction accuracy across multiple benchmarks and
+              interaction scenarios.
+            </p>
+          </div>
+        </div>
+      </section>
+
+      <section id="inthewild">
+        <div class="container">
+          <div class="result-block">
+            <div class="result-head"><h3>Results on in-the-wild images from the PICO-db dataset</h3></div>
+            <div id="gPico"></div>
+          </div>
+        </div>
+      </section>
+
+      <section id="method">
+        <div class="container">
+          <h2>Method</h2>
+          <figure class="media-card method">
+            <img src="assets/pipeline.jpg" alt="MILO method pipeline overview" />
+            <figcaption>
+              <b>Overview of MILO.</b> An RGB image is passed to Hunyuan3D-2.0 to produce a combined human-object
+              mesh. The mesh is rendered from 60 virtual views; body and hand keypoints are triangulated to 3D.
+              SMPL-H is optimized to explain the human component, while multi-view segmentation extracts the
+              object for optional template alignment.
+            </figcaption>
+          </figure>
+        </div>
+      </section>
+
+      <section id="results">
+        <div class="container">
+          <h2>Results</h2>
+          <div class="legend">
+            <span class="leg-item"><span class="sw" style="background:var(--human)"></span> Humans</span>
+            <span class="leg-item"><span class="sw" style="background:var(--object)"></span> Objects / templates</span>
+          </div>
+          <div class="result-block">
+            <div class="result-head"><h3>InterCap</h3></div>
+            <div class="vcarousel" id="cInterCap"></div>
+          </div>
+          <div class="result-block">
+            <div class="result-head"><h3>HODome</h3></div>
+            <div class="vcarousel" id="cHODome"></div>
+          </div>
+          <div class="result-block">
+            <div class="result-head"><h3>IMHD</h3></div>
+            <div class="vcarousel" id="cIMHD"></div>
+          </div>
+        </div>
+      </section>
+
+      <section id="bibtex">
+        <div class="container">
+          <h2>BibTeX</h2>
+          <div class="codebox">
+            <button class="copy" id="copyBib" type="button">Copy</button>
+            <pre id="bibtexCode">@inproceedings{chatterjee2026milo,
+  title     = {Reconstructing Humans and Objects in Interaction
+               using Large Reconstruction Models},
+  author    = {Chatterjee, Agniv and Pavlakos, Georgios},
+  booktitle = {European Conference on Computer Vision (ECCV)},
+  year      = {2026}
+}</pre>
+          </div>
+        </div>
+      </section>
+
+      <section id="acknowledgements">
+        <div class="container">
+          <h2>Acknowledgements</h2>
+          <div class="ack">
+            <p>
+              This research was supported by NSF-2504906, and 2544200; gifts from Adobe, Google, and Nvidia; and
+              computing support on the Vista GPU Cluster through the Center for Generative AI (CGAI) and the
+              Texas Advanced Computing Center (TACC) at the University of Texas at Austin.
+            </p>
+            <p>
+              We thank the authors of InterCap, HODome, IMHD and PICO for the benchmarks, and the developers of
+              Hunyuan3D-2.0, HMR2.0, HaMeR, ViTPose and SMPL-H whose models MILO builds upon.
+            </p>
+          </div>
+        </div>
+      </section>
+
+      <section id="related">
+        <div class="container">
+          <h2>Related Links</h2>
+          <div class="link-group">
+            <div class="chips">
+              <a class="chip" href="https://intercap.is.tue.mpg.de/" target="_blank" rel="noopener">InterCap</a>
+              <a class="chip" href="https://github.com/Juzezhang/HODome" target="_blank" rel="noopener">HODome</a>
+              <a class="chip" href="https://github.com/WangmengLi/IMHD" target="_blank" rel="noopener">IMHD</a>
+              <a class="chip" href="https://pico.is.tue.mpg.de/" target="_blank" rel="noopener">PICO</a>
+              <a class="chip" href="https://contho-release.github.io/" target="_blank" rel="noopener">CONTHO</a>
+              <a class="chip" href="https://hoi-tg.github.io/" target="_blank" rel="noopener">HOI-TG</a>
+              <a class="chip" href="https://jasonyzhang.com/phosa/" target="_blank" rel="noopener">PHOSA</a>
+            </div>
+          </div>
+          <div class="link-group">
+            <div class="chips">
+              <a class="chip" href="https://github.com/Tencent-Hunyuan/Hunyuan3D-2" target="_blank" rel="noopener">Hunyuan3D-2.0</a>
+              <a class="chip" href="https://github.com/geopavlakos/hamer" target="_blank" rel="noopener">HaMeR</a>
+              <a class="chip" href="https://github.com/ViTAE-Transformer/ViTPose" target="_blank" rel="noopener">ViTPose</a>
+            </div>
+          </div>
+        </div>
+      </section>
+    </main>
+
+    <script>
+      // ---------- Theme ----------
+      (function () {
+        var root = document.documentElement, btn = document.getElementById("themeToggle"), stored = null;
+        try { stored = localStorage.getItem("milo-theme"); } catch (e) {}
+        var init = stored || (window.matchMedia && window.matchMedia("(prefers-color-scheme: dark)").matches ? "dark" : "light");
+        apply(init);
+        function apply(t) { root.setAttribute("data-theme", t); btn.textContent = t === "dark" ? "☀️" : "🌙"; }
+        btn.addEventListener("click", function () {
+          var next = root.getAttribute("data-theme") === "dark" ? "light" : "dark";
+          apply(next); try { localStorage.setItem("milo-theme", next); } catch (e) {}
+        });
+      })();
+
+      // ---------- Copy bibtex ----------
+      (function () {
+        var btn = document.getElementById("copyBib");
+        if (!btn) return;
+        btn.addEventListener("click", function () {
+          navigator.clipboard.writeText(document.getElementById("bibtexCode").innerText).then(function () {
+            btn.textContent = "Copied"; setTimeout(function () { btn.textContent = "Copy"; }, 1400);
+          });
+        });
+      })();
+
+      // ---------- Video players (dependency-free) ----------
+      var PREFERS_REDUCED = window.matchMedia && window.matchMedia("(prefers-reduced-motion: reduce)").matches;
+
+      // Sliding carousel: one video at a time, auto-advances — dataset results.
+      function createVideoCarousel(videos, mountId, opts) {
+        opts = opts || {};
+        var mount = document.getElementById(mountId);
+        if (!mount || !videos.length) return;
+        if (opts.ratio) mount.style.setProperty("--vc-ratio", opts.ratio);
+        if (opts.maxWidth) { mount.style.maxWidth = opts.maxWidth; mount.style.margin = "0 auto"; }
+        var interval = opts.interval || 9000, idx = 0, timer = null, dotsWrap = null, inView = false;
+
+        var viewport = document.createElement("div");
+        viewport.className = "vc-viewport";
+        var slides = videos.map(function (v, i) {
+          var slide = document.createElement("div");
+          slide.className = "vc-slide";
+          slide.style.transform = "translateX(" + (i === 0 ? "0" : "100%") + ")";
+          var vid = document.createElement("video");
+          vid.src = v.src; vid.muted = true; vid.loop = true; vid.playsInline = true; vid.controls = true;
+          vid.preload = i === 0 ? "auto" : "metadata";
+          if (v.poster) vid.poster = v.poster;
+          slide.appendChild(vid); viewport.appendChild(slide); return slide;
+        });
+        mount.appendChild(viewport);
+
+        // Slide horizontally between videos (dir +1 = incoming enters from the right).
+        function go(target, dir, user) {
+          target = (target % slides.length + slides.length) % slides.length;
+          if (target === idx) return;
+          var out = idx, inc = target, s = slides[inc];
+          var startX = dir > 0 ? "100%" : "-100%", exitX = dir > 0 ? "-100%" : "100%";
+          s.style.transition = "none";
+          s.style.transform = "translateX(" + startX + ")";
+          void s.offsetWidth; // reflow so the next change animates
+          s.style.transition = "";
+          requestAnimationFrame(function () {
+            slides[out].style.transform = "translateX(" + exitX + ")";
+            slides[inc].style.transform = "translateX(0)";
+          });
+          var ov = slides[out].querySelector("video"); if (ov) ov.pause();
+          var nv = s.querySelector("video");
+          if (nv) { try { nv.currentTime = 0; } catch (e) {} if (inView) nv.play().catch(function () {}); }
+          idx = inc;
+          if (dotsWrap) Array.prototype.forEach.call(dotsWrap.children, function (d, i) { d.classList.toggle("active", i === idx); });
+          if (user) restart();
+        }
+        function restart() {
+          if (timer) clearInterval(timer);
+          if (slides.length > 1 && inView && !PREFERS_REDUCED) timer = setInterval(function () { go(idx + 1, 1); }, interval);
+        }
+
+        if (videos.length > 1) {
+          var prev = document.createElement("button"); prev.className = "vc-btn vc-prev"; prev.setAttribute("aria-label", "Previous"); prev.innerHTML = "&#8249;";
+          var next = document.createElement("button"); next.className = "vc-btn vc-next"; next.setAttribute("aria-label", "Next"); next.innerHTML = "&#8250;";
+          prev.onclick = function () { go(idx - 1, -1, true); }; next.onclick = function () { go(idx + 1, 1, true); };
+          viewport.appendChild(prev); viewport.appendChild(next);
+          dotsWrap = document.createElement("div"); dotsWrap.className = "vc-dots";
+          videos.forEach(function (_, i) {
+            var d = document.createElement("button"); d.className = "vc-dot" + (i === 0 ? " active" : "");
+            d.setAttribute("aria-label", "Go to slide " + (i + 1)); d.onclick = (function (k) { return function () { go(k, k > idx ? 1 : -1, true); }; })(i); dotsWrap.appendChild(d);
+          });
+          mount.appendChild(dotsWrap);
+          mount.addEventListener("mouseenter", function () { if (timer) clearInterval(timer); });
+          mount.addEventListener("mouseleave", restart);
+        }
+
+        if ("IntersectionObserver" in window) {
+          var io = new IntersectionObserver(function (entries) {
+            entries.forEach(function (e) {
+              inView = e.isIntersecting;
+              var v = slides[idx].querySelector("video");
+              if (inView) { if (!PREFERS_REDUCED && v) v.play().catch(function () {}); restart(); }
+              else { if (v) v.pause(); if (timer) clearInterval(timer); }
+            });
+          }, { threshold: 0.35 });
+          io.observe(mount);
+        } else {
+          inView = true;
+          if (!PREFERS_REDUCED) { var f = slides[0].querySelector("video"); if (f) f.play().catch(function () {}); restart(); }
+        }
+      }
+
+      // Coverflow: playing front card(s), neighbours peek at the sides; circular auto-advance.
+      // opts.front = 1 (teaser hero) or 2 (in-the-wild pair).
+      function createCoverflow(videos, mountId, opts) {
+        opts = opts || {};
+        var mount = document.getElementById(mountId);
+        if (!mount || !videos.length) return;
+        var front = opts.front || 1;
+        if (front === 2) mount.classList.add("cf-pair");
+        var n = videos.length;
+        var interval = opts.interval || 5000, cur = 0, timer = null, dotsWrap = null, inView = false;
+
+        var stage = document.createElement("div");
+        stage.className = "cf-stage";
+        var cards = videos.map(function (v, i) {
+          var card = document.createElement("div");
+          card.className = "cf-card";
+          var vid = document.createElement("video");
+          vid.src = v.src; vid.muted = true; vid.loop = true; vid.playsInline = true; vid.preload = "metadata";
+          if (v.poster) vid.poster = v.poster;
+          card.appendChild(vid); stage.appendChild(card);
+          card.addEventListener("click", function () { if (i !== cur) go(i, true); });
+          return card;
+        });
+        mount.appendChild(stage);
+
+        function rel(i) { var r = ((i - cur) % n + n) % n; if (r > n / 2) r -= n; return r; }
+        function layout() {
+          cards.forEach(function (card, i) {
+            var r = rel(i), v = card.querySelector("video"), cls, active;
+            if (front === 2) {
+              cls = r === 0 ? " is-cl" : r === 1 ? " is-cr" : r === -1 ? " is-left" : r === 2 ? " is-right" : "";
+              active = r >= -1 && r <= 2;
+            } else {
+              cls = r === 0 ? " is-center" : r === -1 ? " is-left" : r === 1 ? " is-right" : "";
+              active = Math.abs(r) <= 1;
+            }
+            card.className = "cf-card" + cls;
+            if (active && inView && !PREFERS_REDUCED) { v.play().catch(function () {}); }
+            else { v.pause(); }
+          });
+          if (dotsWrap) Array.prototype.forEach.call(dotsWrap.children, function (d, i) { d.classList.toggle("active", i === cur); });
+        }
+        function go(i, user) { cur = ((i % n) + n) % n; layout(); if (user) restart(); }
+        function restart() {
+          if (timer) clearInterval(timer);
+          if (n > 1 && inView && !PREFERS_REDUCED) timer = setInterval(function () { go(cur + 1); }, interval);
+        }
+
+        if (n > 1) {
+          var prev = document.createElement("button"); prev.className = "vc-btn vc-prev"; prev.setAttribute("aria-label", "Previous"); prev.innerHTML = "&#8249;";
+          var next = document.createElement("button"); next.className = "vc-btn vc-next"; next.setAttribute("aria-label", "Next"); next.innerHTML = "&#8250;";
+          prev.onclick = function () { go(cur - 1, true); }; next.onclick = function () { go(cur + 1, true); };
+          stage.appendChild(prev); stage.appendChild(next);
+          dotsWrap = document.createElement("div"); dotsWrap.className = "vc-dots";
+          videos.forEach(function (_, i) {
+            var d = document.createElement("button"); d.className = "vc-dot" + (i === 0 ? " active" : "");
+            d.setAttribute("aria-label", "Go to slide " + (i + 1)); d.onclick = function () { go(i, true); }; dotsWrap.appendChild(d);
+          });
+          mount.appendChild(dotsWrap);
+          mount.addEventListener("mouseenter", function () { if (timer) clearInterval(timer); });
+          mount.addEventListener("mouseleave", restart);
+        }
+
+        if ("IntersectionObserver" in window) {
+          var io = new IntersectionObserver(function (entries) {
+            entries.forEach(function (e) { inView = e.isIntersecting; layout(); if (inView) restart(); else if (timer) clearInterval(timer); });
+          }, { threshold: 0.25 });
+          io.observe(mount);
+        } else { inView = true; layout(); restart(); }
+
+        layout();
+      }
+
+      var V = "assets/videos/";
+      function clips(prefix, n) {
+        var a = [];
+        for (var i = 1; i <= n; i++) a.push({ src: V + prefix + "_" + i + ".mp4", poster: V + prefix + "_" + i + ".jpg" });
+        return a;
+      }
+      // Teaser: coverflow, advances every 5s.
+      createCoverflow(clips("pico_teaser", 5), "cPicoTeaser", { interval: 5000 });
+
+      // Dataset results: shared width DW; ratio sets each box's height.
+      var DW = "900px";
+      createVideoCarousel(clips("intercap_vid", 4), "cInterCap", { ratio: "1880 / 444", interval: 10000, maxWidth: DW });
+      createVideoCarousel(clips("hodome_vid", 4),   "cHODome",   { ratio: "1572 / 432", interval: 10000, maxWidth: DW });
+      createVideoCarousel(clips("imhd_vid", 2),     "cIMHD",     { ratio: "1720 / 510", interval: 10000, maxWidth: DW });
+
+      // In-the-wild PICO-db: pair coverflow (two front cards), advances every 5s.
+      createCoverflow(clips("pico_vid", 8), "gPico", { interval: 5000, front: 2 });
+
+      // ---------- Scroll reveal ----------
+      (function () {
+        if (PREFERS_REDUCED || !("IntersectionObserver" in window)) return;
+        var els = document.querySelectorAll("main section");
+        els.forEach(function (el) { el.classList.add("reveal"); });
+        var io = new IntersectionObserver(function (entries) {
+          entries.forEach(function (e) { if (e.isIntersecting) { e.target.classList.add("in"); io.unobserve(e.target); } });
+        }, { threshold: 0.08 });
+        els.forEach(function (el) { io.observe(el); });
+      })();
+    </script>
+  </body>
+</html>

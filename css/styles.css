@@ -326,8 +326,9 @@ section {
 
 .pub-thumbnail img {
     width: 160px;
-    height: 110px;
-    object-fit: cover;
+    height: auto;
+    max-height: 110px;
+    object-fit: contain;
     border-radius: 3px;
     display: block;
     border: 1px solid var(--border);
@@ -578,7 +579,8 @@ html.dark .xkcd-wrap img {
 
     .pub-thumbnail img {
         width: 130px;
-        height: 90px;
+        height: auto;
+        max-height: 90px;
     }
 
     .exp-header {
