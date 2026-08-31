@@ -1,0 +1,440 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Assignment - fitting a rigid object template through a video, smoothly</title>
+<style>
+  :root {
+    --bg: #ffffff;
+    --fg: #1f2328;
+    --muted: #59636e;
+    --rule: #d8dee4;
+    --rule-soft: #eaeef2;
+    --code-bg: #f6f8fa;
+    --accent: #0969da;
+    --note-bar: #d0d7de;
+    --mono: ui-monospace, SFMono-Regular, "SF Mono", Menlo, Consolas,
+            "Liberation Mono", monospace;
+    --sans: -apple-system, BlinkMacSystemFont, "Segoe UI", "Helvetica Neue",
+            Arial, sans-serif;
+  }
+  @media (prefers-color-scheme: dark) {
+    :root {
+      --bg: #0d1117;
+      --fg: #e6edf3;
+      --muted: #9198a1;
+      --rule: #30363d;
+      --rule-soft: #21262d;
+      --code-bg: #161b22;
+      --accent: #4493f8;
+      --note-bar: #30363d;
+    }
+  }
+
+  * { box-sizing: border-box; }
+  html { -webkit-text-size-adjust: 100%; }
+  body {
+    margin: 0;
+    background: var(--bg);
+    color: var(--fg);
+    font-family: var(--sans);
+    font-size: 16px;
+    line-height: 1.6;
+  }
+  main {
+    max-width: 830px;
+    margin: 0 auto;
+    padding: 56px 24px 96px;
+  }
+
+  h1, h2, h3 { line-height: 1.25; font-weight: 600; }
+  h1 {
+    font-size: 2rem;
+    margin: 0 0 8px;
+    padding-bottom: 14px;
+    border-bottom: 1px solid var(--rule);
+  }
+  h2 {
+    font-size: 1.4rem;
+    margin: 48px 0 16px;
+    padding-bottom: 8px;
+    border-bottom: 1px solid var(--rule-soft);
+  }
+  h3 { font-size: 1.1rem; margin: 32px 0 12px; }
+  p, ul, ol { margin: 0 0 16px; }
+  li { margin: 6px 0; }
+  li > ul, li > ol { margin: 6px 0; }
+  a { color: var(--accent); text-decoration: none; }
+  a:hover { text-decoration: underline; }
+  strong { font-weight: 600; }
+  hr { border: 0; border-top: 1px solid var(--rule-soft); margin: 40px 0; }
+
+  .subtitle {
+    color: var(--muted);
+    font-size: 0.95rem;
+    margin: 0 0 28px;
+  }
+
+  /* ---- download button ---- */
+  .dl {
+    display: inline-flex;
+    align-items: baseline;
+    gap: 10px;
+    background: var(--accent);
+    color: #fff;
+    font-size: 0.98rem;
+    font-weight: 600;
+    padding: 11px 20px;
+    border-radius: 6px;
+    border: 1px solid transparent;
+    margin: 0 0 36px;
+  }
+  .dl:hover { filter: brightness(1.08); text-decoration: none; }
+  .dl .size { font-weight: 400; opacity: 0.8; font-size: 0.88rem; }
+
+  /* ---- table of contents ---- */
+  nav.toc {
+    background: var(--code-bg);
+    border: 1px solid var(--rule-soft);
+    border-radius: 6px;
+    padding: 14px 20px;
+    margin: 0 0 40px;
+    font-size: 0.92rem;
+  }
+  nav.toc ol { margin: 0; padding-left: 20px; }
+  nav.toc li { margin: 3px 0; }
+
+  /* ---- code ---- */
+  code {
+    font-family: var(--mono);
+    font-size: 0.87em;
+    background: var(--code-bg);
+    border-radius: 5px;
+    padding: 0.15em 0.4em;
+  }
+  pre {
+    background: var(--code-bg);
+    border: 1px solid var(--rule-soft);
+    border-radius: 6px;
+    padding: 14px 16px;
+    overflow-x: auto;
+    margin: 0 0 18px;
+    line-height: 1.45;
+  }
+  pre code {
+    background: none;
+    padding: 0;
+    font-size: 0.83rem;
+    white-space: pre;
+  }
+
+  /* ---- tables ---- */
+  .table-wrap { overflow-x: auto; margin: 0 0 20px; }
+  table { border-collapse: collapse; width: 100%; font-size: 0.92rem; }
+  th, td {
+    border: 1px solid var(--rule);
+    padding: 7px 12px;
+    text-align: left;
+    vertical-align: top;
+  }
+  th { background: var(--code-bg); font-weight: 600; white-space: nowrap; }
+  td code, th code { white-space: nowrap; }
+
+  /* ---- blockquote / citation ---- */
+  blockquote {
+    margin: 0 0 16px;
+    padding: 2px 0 2px 16px;
+    border-left: 3px solid var(--note-bar);
+    color: var(--muted);
+    font-size: 0.94rem;
+  }
+  blockquote p { margin: 0; }
+
+  /* ---- math ---- */
+  .eq {
+    margin: 24px 0;
+    text-align: center;
+    font-size: 1.06rem;
+    overflow-x: auto;
+  }
+  .m { font-family: Georgia, "Times New Roman", serif; }
+  .m i { font-style: italic; }
+  .v { font-weight: 700; font-style: italic; }        /* vectors / matrices */
+  .op { padding: 0 0.18em; }
+  .gap { display: inline-block; width: 2.1em; }
+  sub, sup { font-size: 0.72em; line-height: 0; }
+
+  footer {
+    margin-top: 64px;
+    padding-top: 20px;
+    border-top: 1px solid var(--rule-soft);
+    color: var(--muted);
+    font-size: 0.85rem;
+  }
+</style>
+</head>
+<body>
+<main>
+
+<h1>Assignment - fitting a rigid object template through a video, smoothly</h1>
+<p class="subtitle">Four sequences</p>
+
+<p><a class="dl" href="https://utexas.box.com/s/rtmaqfg7e6ejivz4owphxigt1xmp3u0t" target="_blank" rel="noopener">
+  Download the data <span class="size">209 MB</span>
+</a></p>
+
+<nav class="toc">
+  <ol>
+    <li><a href="#goal">Goal</a></li>
+    <li><a href="#given">What you are given</a></li>
+    <li><a href="#handin">What to hand in</a></li>
+    <li><a href="#inputs">Know your inputs</a></li>
+    <li><a href="#checking">Checking yourself</a></li>
+    <li><a href="#source">Where the data comes from</a></li>
+  </ol>
+</nav>
+
+<h2 id="goal">Goal</h2>
+
+<p>Four videos show a person handling an object. For each video, recover the
+<strong>pose of that object in every frame</strong>, as a trajectory that both
+fits the per-frame observations and moves smoothly in time.</p>
+
+<p>Concretely, for each sequence produce a per-frame rigid placement of the
+object's template mesh in the camera frame:</p>
+
+<div class="eq m">
+  <span class="v">v</span><sup>(<i>i</i>)</sup><sub><i>t</i></sub>
+  <span class="op">=</span>
+  <i>s</i>&thinsp;<span class="v">R</span><sub><i>t</i></sub>&thinsp;<span class="v">v</span><sup>(<i>i</i>)</sup><sub>0</sub>
+  <span class="op">+</span>
+  <span class="v">t</span><sub><i>t</i></sub>
+  <span class="gap"></span>
+  <span class="v">R</span><sub><i>t</i></sub> &isin; <i>SO</i>(3),
+  <span class="gap" style="width:1em"></span>
+  <span class="v">t</span><sub><i>t</i></sub> &isin; &#8477;<sup>3</sup>,
+  <span class="gap" style="width:1em"></span>
+  <i>s</i> &gt; 0
+</div>
+
+<p>where <span class="m"><span class="v">v</span><sup>(<i>i</i>)</sup><sub>0</sub></span>
+is the <span class="m"><i>i</i></span>-th template vertex in its own template
+coordinate frame and
+<span class="m"><span class="v">v</span><sup>(<i>i</i>)</sup><sub><i>t</i></sub></span>
+is that vertex in the camera frame at time <span class="m"><i>t</i></span>.</p>
+
+<p>The object is rigid and the template is metric.</p>
+
+<p>Two requirements hold at once:</p>
+
+<ol>
+  <li><strong>Per-frame fit.</strong> The posed template must explain that
+    frame: it should agree with the frame's object point cloud, and its
+    silhouette (projected with the given intrinsics) should agree with the
+    object mask.</li>
+  <li><strong>Temporal smoothness.</strong> The trajectory
+    <span class="m">{(<span class="v">R</span><sub><i>t</i></sub>,
+    <span class="v">t</span><sub><i>t</i></sub>)}<sup><i>T</i></sup><sub><i>t</i>=1</sub></span>
+    must be smooth. The real motion is continuous; fitting frames independently
+    produces jitter, flips, and 90-180 degree orientation jumps on
+    near-symmetric objects.</li>
+</ol>
+
+<p>Smoothness must not be bought by walking away significantly from the data: a
+smooth but wrong trajectory is a failure, not a solution.</p>
+
+<p><strong>The task is deliberately open-ended - any approach is fine.</strong>
+There is no reference implementation to match, no required loss, and no
+required method.</p>
+
+<h2 id="given">What you are given</h2>
+
+<pre><code>toy_task/
+  README.md
+  load_frame.py                           # minimal loader (numpy + opencv)
+  templates/
+    01.obj  03.obj  04.obj  07.obj        # object templates, TEMPLATE coords
+  sequences/
+    01__01/  01__03/  01__04/  01__07/
+      video.mp4                           # 1920x1080, 30 fps, one frame per timestep
+      object_masks/00000.png ...          # binary (0/255) object mask per frame
+      inputs.npz                          # per-frame geometry + intrinsics</code></pre>
+
+<div class="table-wrap">
+<table>
+  <thead>
+    <tr><th>sequence</th><th>frames</th><th>object</th><th>template</th><th>template extent (m)</th></tr>
+  </thead>
+  <tbody>
+    <tr><td><code>01__01</code></td><td>321</td><td>suitcase</td><td><code>templates/01.obj</code> (591 v / 1188 f)</td><td>0.97 x 0.45 x 0.29</td></tr>
+    <tr><td><code>01__03</code></td><td>531</td><td>ball</td><td><code>templates/03.obj</code> (998 v / 1992 f)</td><td>0.22 x 0.22 x 0.22</td></tr>
+    <tr><td><code>01__04</code></td><td>181</td><td>umbrella</td><td><code>templates/04.obj</code> (1267 v / 2153 f)</td><td>0.99 x 0.99 x 0.86</td></tr>
+    <tr><td><code>01__07</code></td><td>371</td><td>chair</td><td><code>templates/07.obj</code> (342 v / 678 f)</td><td>0.94 x 0.66 x 0.70</td></tr>
+  </tbody>
+</table>
+</div>
+
+<p>Frame index <code>t</code> means the same thing everywhere:
+<code>video.mp4</code> frame <code>t</code>,
+<code>object_masks/{t:05d}.png</code>, and row <code>t</code> of the per-frame
+arrays in <code>inputs.npz</code>. Frames are contiguous, none are missing, and
+every frame has all three inputs.</p>
+
+<p>There is <strong>no ground truth</strong> in this folder - the object poses
+are what you are being asked to produce.</p>
+
+<h3 id="npz"><code>inputs.npz</code></h3>
+
+<div class="table-wrap">
+<table>
+  <thead>
+    <tr><th>key</th><th>shape / dtype</th><th>meaning</th></tr>
+  </thead>
+  <tbody>
+    <tr>
+      <td><code>points_flat</code></td>
+      <td>(M, 3) float32</td>
+      <td><strong>object point clouds in the camera frame</strong>, all frames concatenated - the per-frame 3D observation</td>
+    </tr>
+    <tr>
+      <td><code>points_offsets</code></td>
+      <td>(T+1,) int64</td>
+      <td>frame <code>t</code>'s points are <code>points_flat[off[t]:off[t+1]]</code> (10000 per frame, fewer where the source geometry itself has fewer vertices - only <code>01__03</code>, min 7485)</td>
+    </tr>
+    <tr><td><code>focal_length</code></td><td>(T, 2) float32</td><td><code>(fx, fy)</code> in pixels</td></tr>
+    <tr><td><code>principal_point</code></td><td>(T, 2) float32</td><td><code>(cx, cy)</code> in pixels</td></tr>
+    <tr><td><code>fps</code></td><td>int64</td><td>30</td></tr>
+    <tr>
+      <td><code>sequence_id</code>, <code>object_name</code>, <code>object_label</code></td>
+      <td>str</td>
+      <td>e.g. <code>01__04</code>, <code>04</code>, <code>umbrella</code></td>
+    </tr>
+  </tbody>
+</table>
+</div>
+
+<p>Intrinsics are in fact constant across all frames and sequences
+(f&asymp;918.45, c&asymp;(956.97, 555.94)), but they are stored per frame so you
+never have to assume it. Image size comes from the video or the masks
+(1080 x 1920).</p>
+
+<h3 id="loading">Loading a frame</h3>
+
+<p>The point clouds are ragged, so they are stored concatenated and sliced by
+<code>points_offsets</code>:</p>
+
+<pre><code>import numpy as np
+z   = np.load('sequences/01__07/inputs.npz', allow_pickle=True)
+off = z['points_offsets']
+t   = 100
+pts = z['points_flat'][off[t]:off[t+1]]      # (n_t, 3) float32, camera frame
+fx, fy = z['focal_length'][t]
+cx, cy = z['principal_point'][t]</code></pre>
+
+<p><code>load_frame.py</code> wraps that and pulls the matching video frame and
+mask:</p>
+
+<pre><code>import load_frame as L
+
+seq   = L.load_sequence('01__07')                # npz arrays + n_frames + template path
+f     = L.load_frame(seq, 100)                   # or L.load_frame('01__07', 100)
+f['points']                                      # (n_t, 3) float32, camera frame
+f['mask']                                        # (1080, 1920) bool, object mask
+f['image']                                       # (1080, 1920, 3) BGR video frame
+f['fx'], f['fy'], f['cx'], f['cy']               # intrinsics
+
+uv    = L.project(f['points'], f['fx'], f['fy'], f['cx'], f['cy'])   # (n_t, 2) pixels
+V0, F = L.load_template(seq['template'])         # template verts / faces
+pts   = L.points(seq, 100)                       # just the point cloud</code></pre>
+
+<p>It needs only numpy and opencv. Run directly it self-checks one frame
+(<code>python load_frame.py 01__07 100</code>), printing shapes and the fraction
+of projected points landing inside the object mask.
+<code>with_image=False</code> skips the video decode.</p>
+
+<h2 id="handin">What to hand in</h2>
+
+<ol>
+  <li><strong>The trajectories</strong> - one file per sequence, however you
+    like as long as it is self-describing. A natural form is an npz with
+    <code>R</code> (T,3,3) float, <code>t</code> (T,3) float and <code>s</code>
+    (T,), following the equation above, with <code>T</code> matching that
+    sequence's frame count.</li>
+  <li><strong>The code</strong> that produced them, runnable against this
+    folder.</li>
+  <li><strong>A short write-up</strong> - what you did, what you tried that did
+    not work, where your result is weakest and why.</li>
+  <li><strong>An overlay video</strong> per sequence - your posed template drawn
+    over the video frames. It is the fastest way for both of us to see what the
+    numbers mean.</li>
+</ol>
+
+<h2 id="inputs">Know your inputs</h2>
+
+<p>The point cloud is a per-frame monocular reconstruction, not a clean scan.
+Expect:</p>
+
+<ul>
+  <li><strong>Partial, noisy geometry.</strong> It is the object-labelled part
+    of a single-image 3D reconstruction, cut out by a segmentation step,
+    recomputed independently for every frame. Thin parts (chair legs, umbrella
+    shaft) can be missing or fused to the person.</li>
+  <li><strong>A residual along-ray depth/scale bias</strong> of a few percent,
+    roughly constant within a sequence.</li>
+  <li><strong>Occlusion.</strong> The person handles the object, so on many
+    frames the mask is a partial silhouette and the point cloud a partial
+    surface. Some frames are far worse than their neighbours; recovering those
+    from temporal context is part of the task.</li>
+  <li><strong>Near-symmetric objects.</strong> The ball is a sphere
+    (orientation is unobservable); the suitcase and chair have strong discrete
+    symmetries. Pose is ambiguous per frame and is resolved, if at all, by the
+    trajectory.</li>
+</ul>
+
+<h2 id="checking">Checking yourself</h2>
+
+<p>With no ground truth, judge your own result by:</p>
+
+<ul>
+  <li><strong>Reprojection overlay.</strong> Rasterise the posed template with
+    the intrinsics above and compare against <code>object_masks/{t}.png</code>
+    (IoU per frame). Watch the overlay video; failures are usually obvious to
+    the eye.</li>
+  <li><strong>Fit residual.</strong> Chamfer distance between the posed template
+    and that frame's points.</li>
+  <li><strong>Smoothness.</strong> Inter-frame rotation geodesic (degrees) and
+    translation delta (cm). A good trajectory has no isolated spikes.</li>
+  <li><strong>The classic failure to look for:</strong> low per-frame residual
+    together with large frame-to-frame rotation jumps between
+    symmetry-equivalent poses.</li>
+</ul>
+
+<p>Report these per sequence rather than as one pooled number - the four
+sequences fail in different ways.</p>
+
+<h2 id="source">Where the data comes from</h2>
+
+<p>Derived from the <strong>InterCap</strong> dataset
+(<a href="https://intercap.is.tue.mpg.de/">project page</a>) - subject 01,
+camera 1, colour stream; the <code>templates/</code> meshes are InterCap's own
+object scans. Use is subject to InterCap's original licence and terms.</p>
+
+<blockquote>
+  <p>Yinghao Huang, Omid Taheri, Michael J. Black, Dimitrios Tzionas.
+  <em>InterCap: Joint Markerless 3D Tracking of Humans and Objects in
+  Interaction from Multi-view RGB-D Images.</em> International Journal of
+  Computer Vision (IJCV), 2024.
+  <a href="https://doi.org/10.1007/s11263-024-01984-1">doi:10.1007/s11263-024-01984-1</a></p>
+</blockquote>
+
+<blockquote>
+  <p>Yinghao Huang, Omid Taheri, Michael J. Black, Dimitrios Tzionas.
+  <em>InterCap: Joint Markerless 3D Tracking of Humans and Objects in
+  Interaction.</em> German Conference on Pattern Recognition (GCPR), LNCS 13485,
+  pp. 281-299, Springer, 2022.</p>
+</blockquote>
+
+</main>
+</body>
+</html>
